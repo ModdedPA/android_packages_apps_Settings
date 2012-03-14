@@ -25,4 +25,10 @@
     <!-- ModdedPA version -->
     <string name="moddedpa_version">ModdedPA Version</string>
     <string name="moddedpa_version_default">Unknown</string>
+
+    <!-- About device screen, Cpu info. -->
+    <string name="cpu_info">CPU</string>
+    <!-- About phone screen, Free memory info -->
+    <string name="mem_info">Memory</string>
+    <!-- About phone screen, status item label -->
 </resources>

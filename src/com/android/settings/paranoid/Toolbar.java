@@ -261,14 +261,6 @@ public class Toolbar extends SettingsPreferenceFragment
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.SCREEN_ON_NOTIFICATION_LED,
                     mScreenOnNotificationLed.isChecked() ? 1 : 0);
-        } else if (preference == mNotificationsBehavior) {
-            String val = (String) newValue;
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.NOTIFICATIONS_BEHAVIOUR,
-            Integer.valueOf(val));
-            int index = mNotificationsBehavior.findIndexOfValue(val);
-            mNotificationsBehavior.setSummary(mNotificationsBehavior.getEntries()[index]);
-            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -322,6 +314,14 @@ public class Toolbar extends SettingsPreferenceFragment
                     Settings.System.LISTVIEW_INTERPOLATOR,
                     listviewinterpolator);
             mListViewInterpolator.setSummary(mListViewInterpolator.getEntries()[index]);
+            return true;
+        } else if (preference == mNotificationsBehavior) {
+            String val = (String) newValue;
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.NOTIFICATIONS_BEHAVIOUR,
+            Integer.valueOf(val));
+            int index = mNotificationsBehavior.findIndexOfValue(val);
+            mNotificationsBehavior.setSummary(mNotificationsBehavior.getEntries()[index]);
             return true;
         }
         return false;

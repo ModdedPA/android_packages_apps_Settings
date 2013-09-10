@@ -203,16 +203,16 @@ public class Toolbar extends SettingsPreferenceFragment
                     Settings.System.MAX_NOTIFICATION_ICONS, maxNotIcons);
             return true;
 	} else if (preference == mListViewAnimation) {
-            int listviewanimation = Integer.valueOf((String) objValue);
-            int index = mListViewAnimation.findIndexOfValue((String) objValue);
+            int listviewanimation = Integer.valueOf((String) newValue);
+            int index = mListViewAnimation.findIndexOfValue((String) newValue);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LISTVIEW_ANIMATION,
                     listviewanimation);
             mListViewAnimation.setSummary(mListViewAnimation.getEntries()[index]);
             return true;
         } else if (preference == mListViewInterpolator) {
-            int listviewinterpolator = Integer.valueOf((String) objValue);
-            int index = mListViewInterpolator.findIndexOfValue((String) objValue);
+            int listviewinterpolator = Integer.valueOf((String) newValue);
+            int index = mListViewInterpolator.findIndexOfValue((String) newValue);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LISTVIEW_INTERPOLATOR,
                     listviewinterpolator);

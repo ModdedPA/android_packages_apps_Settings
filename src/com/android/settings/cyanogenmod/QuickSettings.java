@@ -73,6 +73,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
     private static final String STATIC_TILES = "static_tiles";
     private static final String DYNAMIC_TILES = "pref_dynamic_tiles";
     private static final String FLOATING_WINDOW ="floating_window";
+    private static final String PREF_FLIP_QS_TILES = "flip_qs_tiles";  
 
     MultiSelectListPreference mRingMode;
     ListPreference mNetworkMode;
@@ -84,6 +85,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
     CheckBoxPreference mDynamicUsbTether;
     CheckBoxPreference mCollapsePanel;
     CheckBoxPreference mFloatingWindow;
+    CheckBoxPreference mFlipQsTiles;
     PreferenceCategory mGeneralSettings;
     PreferenceCategory mStaticTiles;
     PreferenceCategory mDynamicTiles;
@@ -110,6 +112,10 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         
         mFloatingWindow = (CheckBoxPreference) prefSet.findPreference(FLOATING_WINDOW);
         mFloatingWindow.setChecked(Settings.System.getInt(resolver, Settings.System.QS_FLOATING_WINDOW, 0) == 1);
+
+        mFlipQsTiles = (CheckBoxPreference) findPreference(PREF_FLIP_QS_TILES);
+        mFlipQsTiles.setChecked(Settings.System.getInt(resolver,
+                Settings.System.QUICK_SETTINGS_TILES_FLIP, 1) == 1);
 
         // Add the sound mode
         mRingMode = (MultiSelectListPreference) prefSet.findPreference(EXP_RING_MODE);
@@ -240,7 +246,12 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         } else if (preference == mFloatingWindow) {
             Settings.System.putInt(resolver, Settings.System.QS_FLOATING_WINDOW,
                     mFloatingWindow.isChecked() ? 1 : 0);
-            return true;            
+            return true;
+        } else if (preference == mFlipQsTiles) {
+            Settings.System.putInt(resolver,
+                    Settings.System.QUICK_SETTINGS_TILES_FLIP,
+                    ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
+            return true;               
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

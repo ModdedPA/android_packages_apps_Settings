@@ -80,7 +80,7 @@ public class PerformanceSettings extends SettingsPreferenceFragment {
             }
         });
         alertDialog.show();
-     }
+    }
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {

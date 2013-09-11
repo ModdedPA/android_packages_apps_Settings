@@ -142,6 +142,7 @@
     <string name="tool_bar_settings">Toolbars</string>
     <string name="tool_bar_status_header">Status bar</string>
     <string name="tool_bar_navigation_header">Navigation bar</string>
+    <string name="tool_bar_others">Others</string>
 
     <!-- HALO -->
     <string name="halo_settings_title">HALO</string>
@@ -454,6 +455,10 @@
 
     <!-- Performance settings  -->
     <string name="performance_settings_title">Performance</string>
+
+   <!-- Toggle for Fastboot -->
+    <string name="fastboot_enable_title">Enable fast booting</string>
+    <string name="fastboot_enable_summary">Speed up shutdown/startup by avoiding full hardware restart</string>
 
     <!-- Performance Settings : Warning dialog  -->
     <string name="performance_settings_warning_title">Proceed with Caution</string>

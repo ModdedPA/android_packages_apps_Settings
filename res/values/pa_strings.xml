@@ -547,10 +547,4 @@
     <string name="flip_qs_tiles_title">Flip tiles</string>
     <string name="flip_qs_tiles_summary">Flips the tiles on touch</string> 
 
-    <!-- NFC Polling mode -->
-    <string name="nfc_polling_mode_title">NFC polling mode</string>
-    <string name="nfc_polling_mode_screen_off">Screen off</string>
-    <string name="nfc_polling_mode_screen_locked">Screen on, locked</string>
-    <string name="nfc_polling_mode_screen_unlocked">Screen on, unlocked (default)</string>
-
 </resources>

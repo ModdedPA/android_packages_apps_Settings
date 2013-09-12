@@ -1609,6 +1609,7 @@
                 android:resource="@id/wireless_settings" />
         </activity>
 
+        <activity android:name=".cyanogenmod.KeyboardInputSettings" />
 
         <activity android:name=".notificationlight.NotificationLightSettings" />
 

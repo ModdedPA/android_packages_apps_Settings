@@ -46,6 +46,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private static final String KEY_HARDWARE_KEYS = "hardware_keys";
     private static final String KEY_LISTVIEW_ANIMATION = "listview_animation";
     private static final String KEY_LISTVIEW_INTERPOLATOR = "listview_interpolator";  
+    private static final String PREF_USE_ALT_RESOLVER = "use_alt_resolver";
 
     private ListPreference mAmPmStyle;
     private ListPreference mListViewAnimation;
@@ -57,6 +58,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private CheckBoxPreference mStatusBarNotifCount;
     private CheckBoxPreference mMenuButtonShow;
     private CheckBoxPreference mStatusBarDoNotDisturb;
+    private CheckBoxPreference mUseAltResolver;
     private PreferenceScreen mNavigationBarControls;
     private PreferenceCategory mNavigationCategory;
 
@@ -88,6 +90,11 @@ public class Toolbar extends SettingsPreferenceFragment
         mListViewInterpolator.setValue(String.valueOf(listviewinterpolator));
         mListViewInterpolator.setSummary(mListViewInterpolator.getEntry());
         mListViewInterpolator.setOnPreferenceChangeListener(this);
+
+        mUseAltResolver = (CheckBoxPreference) findPreference(PREF_USE_ALT_RESOLVER);
+        mUseAltResolver.setChecked(Settings.System.getInt(
+                getActivity().getContentResolver(),
+                Settings.System.ACTIVITY_RESOLVER_USE_ALT, 0) == 1);
 
         mShowClock = (CheckBoxPreference) prefSet.findPreference(KEY_SHOW_CLOCK);
         mShowClock.setChecked(Settings.System.getInt(mContext.getContentResolver(),
@@ -184,6 +191,11 @@ public class Toolbar extends SettingsPreferenceFragment
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.STATUS_BAR_DONOTDISTURB,
                     mStatusBarDoNotDisturb.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mUseAltResolver) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.ACTIVITY_RESOLVER_USE_ALT,
+                    ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);

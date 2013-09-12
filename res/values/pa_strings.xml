@@ -547,4 +547,10 @@
     <string name="flip_qs_tiles_title">Flip tiles</string>
     <string name="flip_qs_tiles_summary">Flips the tiles on touch</string> 
 
+    <!-- Alternate default app picker -->
+    <string name="display_short">Display</string>
+    <string name="misc_short">Misc</string>
+    <string name="alt_resolver">Use Alt Default App Grid</string>
+    <string name="alt_resolver_summary">Use Alternate Default App Picker</string>
+
 </resources>

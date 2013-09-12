@@ -84,6 +84,12 @@
            android:entryValues="@array/listview_interpolator_values"
            android:defaultValue="0" />
 
+       <CheckBoxPreference
+           android:key="use_alt_resolver"
+           android:title="@string/alt_resolver"
+           android:summary="@string/alt_resolver_summary"
+           android:defaultValue="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

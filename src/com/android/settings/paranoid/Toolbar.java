@@ -47,6 +47,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private static final String KEY_LISTVIEW_ANIMATION = "listview_animation";
     private static final String KEY_LISTVIEW_INTERPOLATOR = "listview_interpolator";  
     private static final String PREF_USE_ALT_RESOLVER = "use_alt_resolver";
+    private static final String KEY_SCREEN_ON_NOTIFICATION_LED = "screen_on_notification_led";
 
     private ListPreference mAmPmStyle;
     private ListPreference mListViewAnimation;
@@ -59,6 +60,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private CheckBoxPreference mMenuButtonShow;
     private CheckBoxPreference mStatusBarDoNotDisturb;
     private CheckBoxPreference mUseAltResolver;
+    private CheckBoxPreference mScreenOnNotificationLed;
     private PreferenceScreen mNavigationBarControls;
     private PreferenceCategory mNavigationCategory;
 
@@ -95,6 +97,13 @@ public class Toolbar extends SettingsPreferenceFragment
         mUseAltResolver.setChecked(Settings.System.getInt(
                 getActivity().getContentResolver(),
                 Settings.System.ACTIVITY_RESOLVER_USE_ALT, 0) == 1);
+
+        int statusScreenOnNotificationLed = Settings.System.getInt(getContentResolver(),
+                Settings.System.SCREEN_ON_NOTIFICATION_LED, 1);
+
+        mScreenOnNotificationLed = (CheckBoxPreference) findPreference(KEY_SCREEN_ON_NOTIFICATION_LED);
+        mScreenOnNotificationLed.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.SCREEN_ON_NOTIFICATION_LED, 0) == 1);
 
         mShowClock = (CheckBoxPreference) prefSet.findPreference(KEY_SHOW_CLOCK);
         mShowClock.setChecked(Settings.System.getInt(mContext.getContentResolver(),
@@ -197,6 +206,10 @@ public class Toolbar extends SettingsPreferenceFragment
                     Settings.System.ACTIVITY_RESOLVER_USE_ALT,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
+        } else if (preference == mScreenOnNotificationLed) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.SCREEN_ON_NOTIFICATION_LED,
+                    mScreenOnNotificationLed.isChecked() ? 1 : 0);
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

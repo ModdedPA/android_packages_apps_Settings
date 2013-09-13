@@ -572,11 +572,6 @@
     <string name="alt_resolver">Use Alt Default App Grid</string>
     <string name="alt_resolver_summary">Use Alternate Default App Picker</string>
 
-    <!-- Keyboard and Input ASS methods  -->
-    <string name="title_keyboard_input">Keyboard and input methods</string>
-    <string name="disable_fullscreen_keyboard_title">Disable fullscreen keyboard</string>
-    <string name="disable_fullscreen_keyboard_summary">Landscape keyboard will never take up entire screen</string>
-
     <!-- Screen-On Notification Light -->
     <string name="screen_on_notification_led_title">Screen-On Notification Light</string>
     <string name="screen_on_notification_led_summary">Enable Notification Light even when screen is on</string>

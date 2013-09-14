@@ -142,6 +142,7 @@
     <string name="tool_bar_settings">Toolbars</string>
     <string name="tool_bar_status_header">Status bar</string>
     <string name="tool_bar_navigation_header">Navigation bar</string>
+    <string name="tool_bar_listview">ListView Animations</string>
     <string name="tool_bar_others">Others</string>
 
     <!-- HALO -->

@@ -53,6 +53,12 @@
                 android:dialogTitle="@string/dialog_title_font_size" />
 
         <CheckBoxPreference
+            android:key="wake_when_plugged_or_unplugged"
+            android:title="@string/wake_when_plugged_or_unplugged_title"
+            android:summary="@string/wake_when_plugged_or_unplugged_summary"
+            android:defaultValue="false" />
+
+        <CheckBoxPreference
             android:key="notification_pulse"
             android:title="@string/notification_pulse_title"
             android:persistent="false" />

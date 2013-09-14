@@ -48,7 +48,6 @@ public class Toolbar extends SettingsPreferenceFragment
     private static final String KEY_LISTVIEW_INTERPOLATOR = "listview_interpolator";  
     private static final String PREF_USE_ALT_RESOLVER = "use_alt_resolver";
     private static final String KEY_SCREEN_ON_NOTIFICATION_LED = "screen_on_notification_led";
-    private static final String KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
 
     private ListPreference mAmPmStyle;
     private ListPreference mListViewAnimation;
@@ -62,7 +61,6 @@ public class Toolbar extends SettingsPreferenceFragment
     private CheckBoxPreference mStatusBarDoNotDisturb;
     private CheckBoxPreference mUseAltResolver;
     private CheckBoxPreference mScreenOnNotificationLed;
-    private CheckBoxPreference mWakeWhenPluggedOrUnplugged;
     private PreferenceScreen mNavigationBarControls;
     private PreferenceCategory mNavigationCategory;
 
@@ -94,16 +92,6 @@ public class Toolbar extends SettingsPreferenceFragment
         mListViewInterpolator.setValue(String.valueOf(listviewinterpolator));
         mListViewInterpolator.setSummary(mListViewInterpolator.getEntry());
         mListViewInterpolator.setOnPreferenceChangeListener(this);
-
-        // Default value for wake-on-plug behavior from config.xml
-        boolean wakeUpWhenPluggedOrUnpluggedConfig = res.getBoolean(
-                com.android.internal.R.bool.config_unplugTurnsOnScreen);
-
-        mWakeWhenPluggedOrUnplugged =
-                (CheckBoxPreference) findPreference(KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED);
-        mWakeWhenPluggedOrUnplugged.setChecked(Settings.Global.getInt(resolver,
-                Settings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED,
-                (wakeUpWhenPluggedOrUnpluggedConfig ? 1 : 0)) == 1);
 
         mUseAltResolver = (CheckBoxPreference) findPreference(PREF_USE_ALT_RESOLVER);
         mUseAltResolver.setChecked(Settings.System.getInt(
@@ -217,11 +205,6 @@ public class Toolbar extends SettingsPreferenceFragment
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.ACTIVITY_RESOLVER_USE_ALT,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
-            return true;
-        } else if (preference == mWakeWhenPluggedOrUnplugged) {
-            Settings.Global.putInt(getContentResolver(),
-                    Settings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED,
-                    mWakeWhenPluggedOrUnplugged.isChecked() ? 1 : 0);
             return true;
         } else if (preference == mScreenOnNotificationLed) {
             Settings.System.putInt(getActivity().getContentResolver(),

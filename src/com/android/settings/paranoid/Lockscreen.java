@@ -270,12 +270,6 @@ public class Lockscreen extends SettingsPreferenceFragment
                 Display display = mActivity.getWindowManager().getDefaultDisplay();
                 int width = display.getWidth();
                 int height = display.getHeight();
-                Rect rect = new Rect();
-                Window window = mActivity.getWindow();
-                window.getDecorView().getWindowVisibleDisplayFrame(rect);
-                int statusBarHeight = rect.top;
-                int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
-                int titleBarHeight = contentViewTop - statusBarHeight;
                 // Lock screen for tablets visible section are different in landscape/portrait,
                 // image need to be cropped correctly, like wallpaper setup for scrolling in background in home screen
                 // other wise it does not scale correctly

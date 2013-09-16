@@ -591,5 +591,8 @@
     <string name="custom_carrier_label_explain">Please enter a new label. Leave blank to revert to stock label.</string>
     <string name="custom_carrier_label_notset">Custom label currently not set</string>  
 
+    <!-- Network speed -->
+    <string name="show_network_speed">Network speed indicator</string>
+    <string name="show_network_speed_summary">Show network speed in statsbar</string>
 
 </resources>

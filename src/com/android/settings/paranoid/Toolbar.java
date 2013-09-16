@@ -48,6 +48,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private static final String KEY_LISTVIEW_INTERPOLATOR = "listview_interpolator";  
     private static final String PREF_USE_ALT_RESOLVER = "use_alt_resolver";
     private static final String KEY_SCREEN_ON_NOTIFICATION_LED = "screen_on_notification_led";
+    private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
 
     private ListPreference mAmPmStyle;
     private ListPreference mListViewAnimation;
@@ -61,6 +62,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private CheckBoxPreference mStatusBarDoNotDisturb;
     private CheckBoxPreference mUseAltResolver;
     private CheckBoxPreference mScreenOnNotificationLed;
+    private CheckBoxPreference mStatusBarTraffic;
     private PreferenceScreen mNavigationBarControls;
     private PreferenceCategory mNavigationCategory;
 
@@ -77,6 +79,10 @@ public class Toolbar extends SettingsPreferenceFragment
         mQuickPullDown = (CheckBoxPreference) prefSet.findPreference(KEY_QUICK_PULL_DOWN);
         mQuickPullDown.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_QUICK_PULLDOWN, 0) == 1);
+
+        mStatusBarTraffic = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_TRAFFIC);
+        mStatusBarTraffic.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.STATUS_BAR_TRAFFIC, 0) == 1));
 
 	//ListView Animations
         mListViewAnimation = (ListPreference) findPreference(KEY_LISTVIEW_ANIMATION);
@@ -205,6 +211,11 @@ public class Toolbar extends SettingsPreferenceFragment
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.ACTIVITY_RESOLVER_USE_ALT,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mStatusBarTraffic) {
+            value = mStatusBarTraffic.isChecked();
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.STATUS_BAR_TRAFFIC, value ? 1 : 0);
             return true;
         } else if (preference == mScreenOnNotificationLed) {
             Settings.System.putInt(getActivity().getContentResolver(),

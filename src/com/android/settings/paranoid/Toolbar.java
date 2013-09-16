@@ -182,6 +182,7 @@ public class Toolbar extends SettingsPreferenceFragment
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+	boolean value;
         if (preference == mShowClock) {
             Settings.System.putInt(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_SHOW_CLOCK, mShowClock.isChecked()

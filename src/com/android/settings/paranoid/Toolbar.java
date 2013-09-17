@@ -49,6 +49,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private static final String PREF_USE_ALT_RESOLVER = "use_alt_resolver";
     private static final String KEY_SCREEN_ON_NOTIFICATION_LED = "screen_on_notification_led";
     private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
+    private static final String STATUS_BAR_QUICK_PEEK = "status_bar_quick_peek";
 
     private ListPreference mAmPmStyle;
     private ListPreference mListViewAnimation;
@@ -63,6 +64,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private CheckBoxPreference mUseAltResolver;
     private CheckBoxPreference mScreenOnNotificationLed;
     private CheckBoxPreference mStatusBarTraffic;
+    private CheckBoxPreference mStatusBarQuickPeek;
     private PreferenceScreen mNavigationBarControls;
     private PreferenceCategory mNavigationCategory;
 
@@ -83,6 +85,10 @@ public class Toolbar extends SettingsPreferenceFragment
         mStatusBarTraffic = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_TRAFFIC);
         mStatusBarTraffic.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.STATUS_BAR_TRAFFIC, 0) == 1));
+
+        mStatusBarQuickPeek = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_QUICK_PEEK);
+        mStatusBarQuickPeek.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.STATUSBAR_PEEK, 0) == 1));
 
 	//ListView Animations
         mListViewAnimation = (ListPreference) findPreference(KEY_LISTVIEW_ANIMATION);
@@ -217,6 +223,11 @@ public class Toolbar extends SettingsPreferenceFragment
             value = mStatusBarTraffic.isChecked();
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.STATUS_BAR_TRAFFIC, value ? 1 : 0);
+            return true;
+        } else if (preference == mStatusBarQuickPeek) {
+            value = mStatusBarQuickPeek.isChecked();
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.STATUSBAR_PEEK, value ? 1 : 0);
             return true;
         } else if (preference == mScreenOnNotificationLed) {
             Settings.System.putInt(getActivity().getContentResolver(),

@@ -1578,7 +1578,10 @@
        <activity android:name=".paranoid.Toolbar" />
        <activity android:name=".paranoid.Halo" />
        <activity android:name=".paranoid.PieControls" />
-        <activity android:name=".cyanogenmod.PerformanceSettings" />
+       <activity android:name=".cyanogenmod.PerformanceSettings" />
+       <activity android:name=".cyanogenmod.NotificationDrawerSettings" />
+
+       <activity android:name=".cyanogenmod.NotificationDrawerStyle" />
 
         <!-- Pseudo-activity used to provide an intent-filter entry point to encryption settings -->
         <activity android:name="Settings$CryptKeeperSettingsActivity"

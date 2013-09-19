@@ -74,10 +74,12 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
     private static final String DYNAMIC_TILES = "pref_dynamic_tiles";
     private static final String FLOATING_WINDOW ="floating_window";
     private static final String PREF_FLIP_QS_TILES = "flip_qs_tiles";  
+    private static final String QUICK_SETTINGS_COLUMNS = "quick_settings_columns";
 
     MultiSelectListPreference mRingMode;
     ListPreference mNetworkMode;
     ListPreference mScreenTimeoutMode;
+    ListPreference mQuickSettingsColumns;
     CheckBoxPreference mDynamicAlarm;
     CheckBoxPreference mDynamicBugReport;
     CheckBoxPreference mDynamicWifi;
@@ -106,6 +108,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         mGeneralSettings = (PreferenceCategory) prefSet.findPreference(GENERAL_SETTINGS);
         mStaticTiles = (PreferenceCategory) prefSet.findPreference(STATIC_TILES);
         mDynamicTiles = (PreferenceCategory) prefSet.findPreference(DYNAMIC_TILES);
+        mQuickSettingsColumns = (ListPreference) prefSet.findPreference(QUICK_SETTINGS_COLUMNS);
 
         mCollapsePanel = (CheckBoxPreference) prefSet.findPreference(COLLAPSE_PANEL);
         mCollapsePanel.setChecked(Settings.System.getInt(resolver, Settings.System.QS_COLLAPSE_PANEL, 0) == 1);
@@ -116,6 +119,11 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         mFlipQsTiles = (CheckBoxPreference) findPreference(PREF_FLIP_QS_TILES);
         mFlipQsTiles.setChecked(Settings.System.getInt(resolver,
                 Settings.System.QUICK_SETTINGS_TILES_FLIP, 1) == 1);
+
+        mQuickSettingsColumns.setOnPreferenceChangeListener(this);
+        int quickSettingsColumnsValue = Settings.System.getInt(resolver,
+          Settings.System.QUICK_SETTINGS_COLUMNS, 3);
+        mQuickSettingsColumns.setValue(String.valueOf(quickSettingsColumnsValue));
 
         // Add the sound mode
         mRingMode = (MultiSelectListPreference) prefSet.findPreference(EXP_RING_MODE);
@@ -251,7 +259,13 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
             Settings.System.putInt(resolver,
                     Settings.System.QUICK_SETTINGS_TILES_FLIP,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
-            return true;               
+            return true;         
+        } else if (preference == mQuickSettingsColumns) {
+            int value = Integer.valueOf((String) newValue);
+            int index = mQuickSettingsColumns.findIndexOfValue((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.QUICK_SETTINGS_COLUMNS, value);
+            mQuickSettingsColumns.setSummary(mQuickSettingsColumns.getEntries()[index]);
+            return true;      
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

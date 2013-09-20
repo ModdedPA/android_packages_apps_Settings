@@ -50,6 +50,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private static final String KEY_SCREEN_ON_NOTIFICATION_LED = "screen_on_notification_led";
     private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
     private static final String STATUS_BAR_QUICK_PEEK = "status_bar_quick_peek";
+    private static final String STATUS_CATEGORY = "toolbar_status";
 
     private ListPreference mAmPmStyle;
     private ListPreference mListViewAnimation;
@@ -67,6 +68,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private CheckBoxPreference mStatusBarQuickPeek;
     private PreferenceScreen mNavigationBarControls;
     private PreferenceCategory mNavigationCategory;
+    private PreferenceCategory mStatusCategory;
 
     private Context mContext;
 
@@ -145,6 +147,7 @@ public class Toolbar extends SettingsPreferenceFragment
                 Settings.System.NAV_BAR_TABUI_MENU, 0) == 1));
 
         mNavigationBarControls = (PreferenceScreen) prefSet.findPreference(NAV_BAR_CONTROLS);
+        mStatusCategory = (PreferenceCategory) prefSet.findPreference(STATUS_CATEGORY);
 
         try {
             if (Settings.System.getInt(getActivity().getContentResolver(),
@@ -165,16 +168,16 @@ public class Toolbar extends SettingsPreferenceFragment
                 Settings.System.STATUS_BAR_DONOTDISTURB, 0) == 1));
 
         if (!Utils.isTablet()) {
-            prefSet.removePreference(mStatusBarMaxNotif);
-            prefSet.removePreference(mMenuButtonShow);
-            prefSet.removePreference(mStatusBarDoNotDisturb);
+            mStatusCategory.removePreference(mStatusBarMaxNotif);
+            mStatusCategory.removePreference(mMenuButtonShow);
+            mStatusCategory.removePreference(mStatusBarDoNotDisturb);
 
             if(!Utils.hasNavigationBar()) {
                 prefSet.removePreference(mNavigationCategory);
             }
         } else {
             mNavigationCategory.removePreference(mNavigationBarControls);
-            prefSet.removePreference(mQuickPullDown);
+            mStatusCategory.removePreference(mQuickPullDown);
         }
 
         // Only show the hardware keys config on a device that does not have a navbar

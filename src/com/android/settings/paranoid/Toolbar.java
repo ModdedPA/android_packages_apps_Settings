@@ -52,6 +52,9 @@ public class Toolbar extends SettingsPreferenceFragment
     private static final String PREF_STATUS_BAR_TRAFFIC_HIDE = "status_bar_traffic_hide";  
     private static final String STATUS_BAR_QUICK_PEEK = "status_bar_quick_peek";
     private static final String STATUS_CATEGORY = "toolbar_status";
+    private static final String KEY_RECENTS_RAM_BAR = "recents_ram_bar";
+
+    private Preference mRamBar;
 
     private ListPreference mAmPmStyle;
     private ListPreference mListViewAnimation;
@@ -97,6 +100,9 @@ public class Toolbar extends SettingsPreferenceFragment
         mStatusBarQuickPeek = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_QUICK_PEEK);
         mStatusBarQuickPeek.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.STATUSBAR_PEEK, 0) == 1));
+
+        mRamBar = findPreference(KEY_RECENTS_RAM_BAR);
+        updateRamBar();
 
 	//ListView Animations
         mListViewAnimation = (ListPreference) findPreference(KEY_LISTVIEW_ANIMATION);
@@ -249,6 +255,27 @@ public class Toolbar extends SettingsPreferenceFragment
                     mScreenOnNotificationLed.isChecked() ? 1 : 0);
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
+    }
+
+    private void updateRamBar() {
+        int ramBarMode = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.RECENTS_RAM_BAR_MODE, 0);
+        if (ramBarMode != 0)
+            mRamBar.setSummary(getResources().getString(R.string.ram_bar_color_enabled));
+        else
+            mRamBar.setSummary(getResources().getString(R.string.ram_bar_color_disabled));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateRamBar();
+    }
+
+    @Override
+    public void onPause() {
+        super.onResume();
+        updateRamBar();
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {

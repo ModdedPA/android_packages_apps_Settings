@@ -20,6 +20,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface; 
 import android.content.Intent;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -64,6 +66,8 @@ public class RamBar extends SettingsPreferenceFragment implements OnPreferenceCh
     private ColorPickerPreference mRamBarAppMemColor;
     private ColorPickerPreference mRamBarCacheMemColor;
     private ColorPickerPreference mRamBarTotalMemColor;
+
+    private Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

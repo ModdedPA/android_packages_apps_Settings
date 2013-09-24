@@ -652,4 +652,8 @@
     <string name="ram_bar_button_help">Help</string>
     <string name="ram_bar_button_reset">Reset colors</string>
 
+    <!-- Hide initial pag hints -->
+    <string name="lockscreen_hide_initial_page_hints_title">Hide initial page hints</string>
+    <string name="lockscreen_hide_initial_page_hints_summary">Disable hints on left and right when the screen is turned on.</string>
+
 </resources>

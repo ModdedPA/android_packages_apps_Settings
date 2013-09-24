@@ -56,6 +56,7 @@ public class Lockscreen extends SettingsPreferenceFragment
     private static final String KEY_HOME_SCREEN_WIDGETS = "home_screen_widgets";
     private static final String KEY_MAXIMIZE_WIDGETS = "maximize_widgets";
     private static final String KEY_BACKGROUND_PREF = "lockscreen_background";
+    private static final String KEY_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS = "lockscreen_hide_initial_page_hints";
 
     private static final int REQUEST_CODE_BG_WALLPAPER = 1024;
     private static final int LOCKSCREEN_BACKGROUND_COLOR_FILL = 0;
@@ -68,6 +69,7 @@ public class Lockscreen extends SettingsPreferenceFragment
     private CheckBoxPreference mHomeScreenWidgets;
     private CheckBoxPreference mMaximizeWidgets;
     private CheckBoxPreference mQuickUnlock;
+    private CheckBoxPreference mLockscreenHideInitialPageHints; 
 
     private File mWallpaperImage;
     private File mWallpaperTemporary;
@@ -99,6 +101,14 @@ public class Lockscreen extends SettingsPreferenceFragment
         mSeeThrough = (CheckBoxPreference) prefSet.findPreference(KEY_SEE_TRHOUGH);
         mSeeThrough.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1);
+                   
+        mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference(KEY_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);
+        if (!Utils.isPhone(getActivity())) {
+            getPreferenceScreen().removePreference(mLockscreenHideInitialPageHints);
+            mLockscreenHideInitialPageHints = null;
+        } else {
+            mLockscreenHideInitialPageHints.setOnPreferenceChangeListener(this);
+        } 
 
         mMaximizeWidgets = (CheckBoxPreference) prefSet.findPreference(KEY_MAXIMIZE_WIDGETS);
         mMaximizeWidgets.setChecked(Settings.System.getInt(mContext.getContentResolver(),
@@ -107,7 +117,7 @@ public class Lockscreen extends SettingsPreferenceFragment
         mHomeScreenWidgets = (CheckBoxPreference) prefSet.findPreference(KEY_HOME_SCREEN_WIDGETS);
         mHomeScreenWidgets.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.HOME_SCREEN_WIDGETS, 0) == 1);
-                   
+
         if(Utils.getScreenType(mContext) == Utils.DEVICE_TABLET) {
             prefSet.removePreference(mAllowRotation);
             prefSet.removePreference(mMaximizeWidgets);
@@ -144,6 +154,10 @@ public class Lockscreen extends SettingsPreferenceFragment
         } else if (preference == mQuickUnlock) {
             Settings.System.putBoolean(mContext.getContentResolver(),
                     Settings.System.LOCKSCREEN_QUICK_UNLOCK, mQuickUnlock.isChecked());
+            return true;
+        } else if (preference == mLockscreenHideInitialPageHints) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(cr, Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, value ? 1 : 0);
             return true;
         } else if (preference == mSeeThrough) {
             Settings.System.putInt(mContext.getContentResolver(),
@@ -182,6 +196,19 @@ public class Lockscreen extends SettingsPreferenceFragment
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mIsPrimary) {
+            ContentResolver cr = getActivity().getContentResolver();
+
+	    if (mLockscreenHideInitialPageHints != null) {
+                mLockscreenHideInitialPageHints.setChecked(Settings.System.getInt(cr,
+                        Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, 0) == 1);
+            } 
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

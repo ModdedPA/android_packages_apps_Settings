@@ -76,6 +76,8 @@ public class Lockscreen extends SettingsPreferenceFragment
 
     private Context mContext;
 
+    private boolean mIsPrimary;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,10 +156,6 @@ public class Lockscreen extends SettingsPreferenceFragment
         } else if (preference == mQuickUnlock) {
             Settings.System.putBoolean(mContext.getContentResolver(),
                     Settings.System.LOCKSCREEN_QUICK_UNLOCK, mQuickUnlock.isChecked());
-            return true;
-        } else if (preference == mLockscreenHideInitialPageHints) {
-            boolean value = (Boolean) objValue;
-            Settings.System.putInt(cr, Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, value ? 1 : 0);
             return true;
         } else if (preference == mSeeThrough) {
             Settings.System.putInt(mContext.getContentResolver(),
@@ -242,7 +240,11 @@ public class Lockscreen extends SettingsPreferenceFragment
         if (preference == mCustomBackground) {
             int selection = mCustomBackground.findIndexOfValue(objValue.toString());
             return handleBackgroundSelection(selection);
-        }
+        } else if (preference == mLockscreenHideInitialPageHints) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(cr, Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, value ? 1 : 0);
+            return true;
+	}
         return false;
     }
 

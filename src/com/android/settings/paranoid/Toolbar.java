@@ -181,7 +181,7 @@ public class Toolbar extends SettingsPreferenceFragment
 
         if (!Utils.isTablet()) {
             mStatusCategory.removePreference(mStatusBarMaxNotif);
-            mStatusCategory.removePreference(mMenuButtonShow);
+            mNavigationCategory.removePreference(mMenuButtonShow);
             mStatusCategory.removePreference(mStatusBarDoNotDisturb);
 
             if(!Utils.hasNavigationBar()) {

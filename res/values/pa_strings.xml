@@ -597,12 +597,6 @@
     <string name="hide_network_speed">Hide when there is no traffic</string>
     <string name="hide_network_speed_summary">Hide network speed indicator when there is no traffic</string>
 
-    <!-- Network speed color style -->
-    <string name="network_speed_color_title">Network speed color</string>
-    <string name="network_speed_color_style">Color style</string>
-    <string name="network_speed_style_reset">Reset</string>
-    <string name="network_speed_color_summary">Change the color of network speed indicator</string>
-
     <!-- Statusbar Quick Peek -->
     <string name="statusbar_quick_peek_title">Quick Peek</string>
     <string name="statusbar_quick_peek_summary">Peek at statusbar by swiping from top edge of screen</string>

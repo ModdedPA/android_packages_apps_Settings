@@ -53,6 +53,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private static final String STATUS_BAR_QUICK_PEEK = "status_bar_quick_peek";
     private static final String STATUS_CATEGORY = "toolbar_status";
     private static final String KEY_RECENTS_RAM_BAR = "recents_ram_bar";
+    private static final String KEY_NOTIFICATION_BEHAVIOUR = "notifications_behaviour";
 
     private Preference mRamBar;
 
@@ -60,6 +61,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private ListPreference mListViewAnimation;
     private ListPreference mListViewInterpolator;  
     private ListPreference mStatusBarMaxNotif;
+    private ListPreference mNotificationsBehavior;
     private CheckBoxPreference mQuickPullDown;
     private CheckBoxPreference mShowClock;
     private CheckBoxPreference mCircleBattery;
@@ -103,6 +105,12 @@ public class Toolbar extends SettingsPreferenceFragment
 
         mRamBar = findPreference(KEY_RECENTS_RAM_BAR);
         updateRamBar();
+
+        int CurrentBehavior = Settings.System.getInt(getContentResolver(), Settings.System.NOTIFICATIONS_BEHAVIOUR, 0);
+        mNotificationsBehavior = (ListPreference) findPreference(KEY_NOTIFICATION_BEHAVIOUR);
+        mNotificationsBehavior.setValue(String.valueOf(CurrentBehavior));
+        mNotificationsBehavior.setSummary(mNotificationsBehavior.getEntry());
+        mNotificationsBehavior.setOnPreferenceChangeListener(this);
 
 	//ListView Animations
         mListViewAnimation = (ListPreference) findPreference(KEY_LISTVIEW_ANIMATION);
@@ -253,6 +261,14 @@ public class Toolbar extends SettingsPreferenceFragment
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.SCREEN_ON_NOTIFICATION_LED,
                     mScreenOnNotificationLed.isChecked() ? 1 : 0);
+        } else if (preference == mNotificationsBehavior) {
+            String val = (String) newValue;
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.NOTIFICATIONS_BEHAVIOUR,
+            Integer.valueOf(val));
+            int index = mNotificationsBehavior.findIndexOfValue(val);
+            mNotificationsBehavior.setSummary(mNotificationsBehavior.getEntries()[index]);
+            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

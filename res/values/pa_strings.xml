@@ -662,4 +662,7 @@
     <string name="lockscreen_hide_initial_page_hints_title">Hide initial page hints</string>
     <string name="lockscreen_hide_initial_page_hints_summary">Disable hints on left and right when the screen is turned on.</string>
 
+    <!-- Notification Behavior Preferences -->
+    <string name="notification_behaviour_title">Notification behavior</string>
+
 </resources>

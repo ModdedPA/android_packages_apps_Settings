@@ -77,7 +77,6 @@
         <PreferenceScreen
             android:fragment="com.android.settings.cyanogenmod.StatusBarTrafficStyle"
             android:key="network_speed_color"
-            android:dependency="status_bar_traffic"
             android:title="@string/network_speed_color_title" 
             android:summary="@string/network_speed_color_summary" />
  

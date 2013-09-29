@@ -43,7 +43,7 @@ import com.android.settings.widget.SeekBarPreference;
  * Using the original CyanogenMod Color Picker instead of margaritov used 
  * in Slim roms
  */
-import com.android.settings.cyanogenmod.colorpicker.ColorPickerPreference;
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 public class StatusBarTrafficStyle extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener {

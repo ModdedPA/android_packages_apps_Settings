@@ -62,11 +62,16 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_SCREEN_SAVER = "screensaver";
     private static final String KEY_WIFI_DISPLAY = "wifi_display";
 
+    private static final String KEY_POWER_FADE_EFFECT = "power_fade_effect";
+
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
 
     private DisplayManager mDisplayManager;
 
     private CheckBoxPreference mAccelerometer;
+
+    private CheckBoxPreference mPowerFadeEffect;
+
     private WarnedListPreference mFontSizePref;
     private CheckBoxPreference mNotificationPulse;
 
@@ -102,6 +107,10 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             // if the device supports rotation.
             getPreferenceScreen().removePreference(mAccelerometer);
         }
+
+        mPowerFadeEffect = (CheckBoxPreference) findPreference(KEY_POWER_FADE_EFFECT);
+        mPowerFadeEffect.setChecked(Settings.System.getBoolean(
+                    getActivity().getContentResolver(), Settings.System.POWER_FADE_EFFECT, false));
 
         mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
         if (mScreenSaverPreference != null
@@ -343,6 +352,9 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             Settings.System.putInt(getContentResolver(), Settings.System.NOTIFICATION_LIGHT_PULSE,
                     value ? 1 : 0);
             return true;
+        } else if (preference == mPowerFadeEffect){
+            Settings.System.putBoolean(getActivity().getContentResolver(),
+                    Settings.System.POWER_FADE_EFFECT, mPowerFadeEffect.isChecked());
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -361,7 +373,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (KEY_FONT_SIZE.equals(key)) {
             writeFontSizePreference(objValue);
         }
-
+        
         return true;
     }
 

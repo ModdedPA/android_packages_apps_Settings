@@ -78,4 +78,9 @@
             android:key="custom_carrier_label"
             android:title="@string/custom_carrier_label_title" /> 
 
+        <CheckBoxPreference
+            android:key="power_fade_effect"
+            android:title="@string/power_fade_effect"
+            android:summary="@string/power_fade_effect_summary"
+            android:defaultValue="false" />
 </PreferenceScreen>

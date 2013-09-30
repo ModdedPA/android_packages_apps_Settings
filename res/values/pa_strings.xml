@@ -476,6 +476,10 @@
     <!-- Performance settings  -->
     <string name="performance_settings_title">Performance</string>
 
+    <!-- Performance Settings : Set on boot option -->
+    <string name="performance_set_on_boot">Set on boot</string>
+    <string name="performance_set_on_boot_summary">Restore the settings on boot</string>
+
    <!-- Toggle for Fastboot -->
     <string name="fastboot_enable_title">Enable fast booting</string>
     <string name="fastboot_enable_summary">Speed up shutdown/startup by avoiding full hardware restart</string>
@@ -511,6 +515,15 @@
     <string name="io_sched_summary" translatable="false">%S</string>
     <string name="io_sched_set_on_boot">Set on boot</string>
     <string name="io_sched_set_on_boot_summary">Restore the I/O scheduler settings on boot</string>
+
+    <!-- Performance Settings : Performance profile settings -->
+    <string name="perf_profile_title">Profile</string>
+    <string name="perf_profile_summary" translatable="false">%s</string>
+
+    <!-- Performance Settings : Performance profile modes -->
+    <string name="perf_profile_pwrsv">Power save</string>
+    <string name="perf_profile_bal">Balanced</string>
+    <string name="perf_profile_perf">Performance</string>
 
     <!-- Memory Management -->
     <string name="memory_management_title">Memory management</string>
@@ -628,7 +641,6 @@
 
     <!-- Less Notification sounds -->
     <string name="less_notification_sounds_title">Less Frequent Notification Sounds</string>
-    <string name="less_notification_sounds_summary">Limit the notification sounds of each app to only play once per set time period</string>
 
     <!-- Recents Ram Bar -->
     <string name="ram_bar">Recents RAM bar</string>
@@ -656,4 +668,5 @@
     <!-- Notification Behavior Preferences -->
     <string name="notification_behaviour_title">Notification behavior</string>
 
+    <string name="less_notification_sounds_summary">Limit the notification sounds of each app to only play once per set time period</string>
 </resources>

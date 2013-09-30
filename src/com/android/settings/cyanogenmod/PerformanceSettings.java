@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 The CyanogenMod Project
+ * Copyright (C) 2013 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,10 @@ import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
+<<<<<<< HEAD
 import android.provider.Settings;
+=======
+>>>>>>> 39d9d45... Performance profiles
 import android.text.TextUtils;
 
 import com.android.settings.R;

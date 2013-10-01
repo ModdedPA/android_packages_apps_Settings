@@ -66,8 +66,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-
-import com.android.settings.util.Helpers;
  
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -128,7 +126,6 @@ public class DevelopmentSettings extends PreferenceFragment
     private static final String OVERLAY_DISPLAY_DEVICES_KEY = "overlay_display_devices";
     private static final String DEBUG_DEBUGGING_CATEGORY_KEY = "debug_debugging_category";
     private static final String DEBUG_APPLICATIONS_CATEGORY_KEY = "debug_applications_category";
-    private static final String RESTART_SYSTEMUI = "restart_systemui";
  
     private static final String OPENGL_TRACES_KEY = "enable_opengl_traces";
 
@@ -163,7 +160,6 @@ public class DevelopmentSettings extends PreferenceFragment
     private CheckBoxPreference mEnableAdb;
     private Preference mClearAdbKeys;
     private Preference mBugreport;
-    private Preference mRestartSystemUI;
     private CheckBoxPreference mBugreportInPower;
     private CheckBoxPreference mKeepScreenOn;
     private CheckBoxPreference mEnforceReadExternal;
@@ -247,8 +243,6 @@ public class DevelopmentSettings extends PreferenceFragment
             }
         }
  
-        mRestartSystemUI = findPreference(RESTART_SYSTEMUI);
-
         mBugreport = findPreference(BUGREPORT);
         mBugreportInPower = findAndInitCheckboxPref(BUGREPORT_IN_POWER_KEY);
         mKeepScreenOn = findAndInitCheckboxPref(KEEP_SCREEN_ON);
@@ -1163,8 +1157,6 @@ public class DevelopmentSettings extends PreferenceFragment
                         .setPositiveButton(android.R.string.ok, this)
                         .setNegativeButton(android.R.string.cancel, null)
                         .show();
-        } else if (preference == mRestartSystemUI) {
-            Helpers.restartSystemUI(); 
         } else if (preference == mBugreportInPower) {
             Settings.Secure.putInt(getActivity().getContentResolver(),
                     Settings.Secure.BUGREPORT_IN_POWER_MENU,

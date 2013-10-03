@@ -16,7 +16,7 @@
 
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/perf_profiles_title">
+    android:title="@string/perf_profile_title">
 
     <ListPreference
         android:key="pref_perf_profile"

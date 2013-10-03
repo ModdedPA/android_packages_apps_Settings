@@ -335,39 +335,6 @@ public class SettingsPreferenceFragment extends PreferenceFragment implements Di
         }
     }
 
-    public boolean removePreferenceIfPackageNotInstalled(Preference preference) {
-        return removePreferenceIfPackageNotInstalled(preference, getPreferenceScreen());
-    }
-
-    public boolean removePreferenceIfPackageNotInstalled(Preference preference, PreferenceGroup parent) {
-        String intentUri = ((PreferenceScreen) preference).getIntent().toUri(1);
-        Pattern pattern = Pattern.compile("component=([^/]+)/");
-        Matcher matcher = pattern.matcher(intentUri);
-
-        String packageName = matcher.find() ? matcher.group(1) : null;
-        boolean available = true;
-
-        if (packageName != null) {
-            try {
-                PackageInfo pi = getPackageManager().getPackageInfo(packageName, 0);
-                if (!pi.applicationInfo.enabled) {
-                    Log.e(TAG, "package " + packageName + " disabled, hiding preference.");
-                    available = false;
-                }
-            } catch (NameNotFoundException e) {
-                Log.e(TAG, "package " + packageName + " not installed, hiding preference.");
-                available = false;
-            }
-        }
-
-        if (!available) {
-            parent.removePreference(preference);
-            return true;
-        }
-
-        return false;
-    }
-
     // Need to AOKP Custom system animation
     public void setTitle(int resId) {
         getActivity().setTitle(resId);

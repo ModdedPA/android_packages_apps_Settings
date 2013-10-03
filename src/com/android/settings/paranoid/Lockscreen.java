@@ -110,6 +110,8 @@ public class Lockscreen extends SettingsPreferenceFragment
             mLockscreenHideInitialPageHints = null;
         } else {
             mLockscreenHideInitialPageHints.setOnPreferenceChangeListener(this);
+            mLockscreenHideInitialPageHints.setChecked(Settings.System.getInt(getContentResolver(),
+                                                Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, 0) == 1);
         } 
 
         mMaximizeWidgets = (CheckBoxPreference) prefSet.findPreference(KEY_MAXIMIZE_WIDGETS);
@@ -192,20 +194,6 @@ public class Lockscreen extends SettingsPreferenceFragment
                     Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS, mMaximizeWidgets.isChecked() ? 1 : 0);
          }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (mIsPrimary) {
-            ContentResolver cr = getActivity().getContentResolver();
-
-	    if (mLockscreenHideInitialPageHints != null) {
-                mLockscreenHideInitialPageHints.setChecked(Settings.System.getInt(cr,
-                        Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, 0) == 1);
-            } 
-        }
     }
 
     @Override

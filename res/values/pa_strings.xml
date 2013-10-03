@@ -143,7 +143,9 @@
     <string name="tool_bar_status_header">Status bar</string>
     <string name="tool_bar_navigation_header">Navigation bar</string>
     <string name="tool_bar_listview">ListView Animations</string>
-    <string name="tool_bar_others">Others</string>
+    <string name="tool_bar_ui">User Inferface</string>
+    <string name="tool_bar_qs">Quick Settings</string>
+    <string name="tool_bar_notification">Notification Drawer</string>
 
     <!-- Halo -->
     <string name="halo_settings_title">Halo</string>

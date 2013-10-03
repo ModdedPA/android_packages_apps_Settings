@@ -66,6 +66,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_WIFI_DISPLAY = "wifi_display";
     private static final String KEY_BATTERY_LIGHT = "battery_light";
     private static final String KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
+    private static final String KEY_POWER_FADE_EFFECT = "power_fade_effect";
     private static final String PREF_CUSTOM_CARRIER_LABEL = "custom_carrier_label";
 
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
@@ -74,6 +75,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     private CheckBoxPreference mAccelerometer;
     private CheckBoxPreference mWakeWhenPluggedOrUnplugged;
+    private CheckBoxPreference mPowerFadeEffect;
     private WarnedListPreference mFontSizePref;
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
@@ -113,6 +115,10 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             // Display settings.  However, is still available in Accessibility settings.
             getPreferenceScreen().removePreference(mAccelerometer);
         }
+
+        mPowerFadeEffect = (CheckBoxPreference) findPreference(KEY_POWER_FADE_EFFECT);
+        mPowerFadeEffect.setChecked(Settings.System.getBoolean(
+                    getActivity().getContentResolver(), Settings.System.POWER_FADE_EFFECT, false));
 
         mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
         if (mScreenSaverPreference != null
@@ -419,6 +425,9 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             });
 
             alert.show(); 
+        } else if (preference == mPowerFadeEffect){
+            Settings.System.putBoolean(getActivity().getContentResolver(),
+                    Settings.System.POWER_FADE_EFFECT, mPowerFadeEffect.isChecked());
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -437,7 +446,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (KEY_FONT_SIZE.equals(key)) {
             writeFontSizePreference(objValue);
         }
-
+        
         return true;
     }
 

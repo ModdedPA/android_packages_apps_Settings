@@ -604,11 +604,21 @@
     <string name="custom_carrier_label_explain">Please enter a new label. Leave blank to revert to stock label.</string>
     <string name="custom_carrier_label_notset">Custom label currently not set</string>  
 
+    <!-- Power Fade Effect -->
+    <string name="power_fade_effect">Power Fade Effect</string>
+    <string name="power_fade_effect_summary">Use fade effect instead of electron beam</string>
+
     <!-- Network speed indicator & hide -->
     <string name="enable_network_speed">Network speed indicator</string>
     <string name="enable_network_speed_summary">Show network speed in statusbar</string> 
     <string name="hide_network_speed">Hide when there is no traffic</string>
     <string name="hide_network_speed_summary">Hide network speed indicator when there is no traffic</string>
+
+    <!-- Network speed color style -->
+    <string name="network_speed_color_title">Network speed color</string>
+    <string name="network_speed_color_style">Color style</string>
+    <string name="network_speed_style_reset">Reset</string>
+    <string name="network_speed_color_summary">Change the color of network speed indicator</string>
 
     <!-- Statusbar Quick Peek -->
     <string name="statusbar_quick_peek_title">Quick Peek</string>
@@ -669,4 +679,10 @@
     <string name="notification_behaviour_title">Notification behavior</string>
 
     <string name="less_notification_sounds_summary">Limit the notification sounds of each app to only play once per set time period</string>
+
+    <!-- Language & input -->
+    <string name="volume_key_cursor_control_title">Volume key cursor control</string>
+    <string name="volume_key_cursor_control_off">Disabled</string>
+    <string name="volume_key_cursor_control_on">Volume up/down moves cursor left/right</string>
+    <string name="volume_key_cursor_control_on_reverse">Volume up/down moves cursor right/left</string>
 </resources>

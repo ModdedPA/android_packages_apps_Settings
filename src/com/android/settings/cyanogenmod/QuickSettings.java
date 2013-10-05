@@ -94,12 +94,6 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.quick_settings_panel_settings);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
         PreferenceScreen prefSet = getPreferenceScreen();
         PackageManager pm = getPackageManager();
         ContentResolver resolver = getActivity().getContentResolver();

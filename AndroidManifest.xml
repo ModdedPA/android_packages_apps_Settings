@@ -1737,7 +1737,6 @@
             </intent-filter>
         </receiver>
 
-
         <activity android:name=".paranoid.PlatLogoActivity"
                 android:theme="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen"
                 android:process=":ui">
@@ -1756,6 +1755,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!-- Lto Service -->
+        <service android:label="LtoService"
+            android:enabled="true"
+            android:exported="false"
+            android:name=".cyanogenmod.LtoService">
+        </service>
 
     </application>
 </manifest>

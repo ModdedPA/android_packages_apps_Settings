@@ -216,7 +216,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        ContentResolver resolver = getActivity().getApplicationContext().getContentResolver();
+        ContentResolver resolver = getActivity().getContentResolver();
         if (preference == mDynamicAlarm) {
             Settings.System.putInt(resolver, Settings.System.QS_DYNAMIC_ALARM,
                     mDynamicAlarm.isChecked() ? 1 : 0);

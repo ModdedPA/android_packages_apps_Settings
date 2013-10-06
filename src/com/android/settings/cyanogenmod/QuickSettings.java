@@ -93,10 +93,13 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         addPreferencesFromResource(R.xml.quick_settings_panel_settings);
         PreferenceScreen prefSet = getPreferenceScreen();
+        
         PackageManager pm = getPackageManager();
         ContentResolver resolver = getActivity().getContentResolver();
+        
         mGeneralSettings = (PreferenceCategory) prefSet.findPreference(GENERAL_SETTINGS);
         mStaticTiles = (PreferenceCategory) prefSet.findPreference(STATIC_TILES);
         mDynamicTiles = (PreferenceCategory) prefSet.findPreference(DYNAMIC_TILES);
@@ -211,8 +214,9 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         }
     }
 
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference, Object newValue) {
-        ContentResolver resolver = getActivity().getContentResolver();
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        ContentResolver resolver = getActivity().getApplicationContext().getContentResolver();
         if (preference == mDynamicAlarm) {
             Settings.System.putInt(resolver, Settings.System.QS_DYNAMIC_ALARM,
                     mDynamicAlarm.isChecked() ? 1 : 0);

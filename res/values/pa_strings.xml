@@ -478,10 +478,6 @@
     <!-- Performance settings  -->
     <string name="performance_settings_title">Performance</string>
 
-    <!-- Performance Settings : Set on boot option -->
-    <string name="performance_set_on_boot">Set on boot</string>
-    <string name="performance_set_on_boot_summary">Restore the settings on boot</string>
-
    <!-- Toggle for Fastboot -->
     <string name="fastboot_enable_title">Enable fast booting</string>
     <string name="fastboot_enable_summary">Speed up shutdown/startup by avoiding full hardware restart</string>

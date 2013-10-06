@@ -24,10 +24,7 @@ import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
-<<<<<<< HEAD
 import android.provider.Settings;
-=======
->>>>>>> 39d9d45... Performance profiles
 import android.text.TextUtils;
 
 import com.android.settings.R;

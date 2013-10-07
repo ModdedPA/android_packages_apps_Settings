@@ -50,9 +50,11 @@ public class StatusBarTrafficStyle extends SettingsPreferenceFragment implements
 
     private static final String TAG = "StatusBarTrafficStyle";
     private static final String PREF_STATUS_BAR_TRAFFIC_COLOR = "network_speed_color";
+    private static final String PREF_STATUS_BAR_TRAFFIC_USE_ICON_COLOR = "status_bar_traffic_use_icon_color";
 
     private ColorPickerPreference mStatusBarTrafficColor;
-    
+    private CheckBoxPreference mStatusBarTrafficUseIconColor;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +78,12 @@ public class StatusBarTrafficStyle extends SettingsPreferenceFragment implements
                     Settings.System.STATUS_BAR_TRAFFIC_COLOR, 0xff000000);
         String hexColor = String.format("#%08x", (0xffffffff & intColor));
         mStatusBarTrafficColor.setNewPreviewColor(intColor);
+
+        mStatusBarTrafficUseIconColor = (CheckBoxPreference) findPreference(PREF_STATUS_BAR_TRAFFIC_USE_ICON_COLOR);
+        mStatusBarTrafficUseIconColor.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                    Settings.System.STATUS_BAR_TRAFFIC_USE_ICON_COLOR, 0) == 1);
+
+        mStatusBarTrafficColor.setEnabled(!mStatusBarTrafficUseIconColor.isChecked());
 
         setHasOptionsMenu(true);
     }
@@ -103,6 +111,12 @@ public class StatusBarTrafficStyle extends SettingsPreferenceFragment implements
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
             Preference preference) {
+        if (preference == mStatusBarTrafficUseIconColor) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                                            Settings.System.STATUS_BAR_TRAFFIC_USE_ICON_COLOR, mStatusBarTrafficUseIconColor.isChecked() ? 1 : 0);
+
+            mStatusBarTrafficColor.setEnabled(!mStatusBarTrafficUseIconColor.isChecked());
+        }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 

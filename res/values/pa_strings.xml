@@ -612,6 +612,7 @@
     <string name="network_speed_color_style">Color style</string>
     <string name="network_speed_style_reset">Reset</string>
     <string name="network_speed_color_summary">Change the color of network speed indicator</string>
+    <string name="status_bar_traffic_use_icon_color">Use status bar icon color</string>
 
     <!-- Statusbar Quick Peek -->
     <string name="statusbar_quick_peek_title">Quick Peek</string>

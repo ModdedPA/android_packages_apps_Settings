@@ -54,6 +54,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private static final String STATUS_CATEGORY = "toolbar_status";
     private static final String KEY_RECENTS_RAM_BAR = "recents_ram_bar";
     private static final String KEY_NOTIFICATION_BEHAVIOUR = "notifications_behaviour";
+    private static final String STATUS_BAR_TRAFFIC_SUMMARY = "status_bar_traffic_summary";   
 
     private Preference mRamBar;
 
@@ -62,6 +63,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private ListPreference mListViewInterpolator;  
     private ListPreference mStatusBarMaxNotif;
     private ListPreference mNotificationsBehavior;
+    private ListPreference mStatusBarTraffic_summary;  
     private CheckBoxPreference mQuickPullDown;
     private CheckBoxPreference mShowClock;
     private CheckBoxPreference mCircleBattery;
@@ -98,6 +100,11 @@ public class Toolbar extends SettingsPreferenceFragment
         mStatusBarTraffic_hide = (CheckBoxPreference) prefSet.findPreference(PREF_STATUS_BAR_TRAFFIC_HIDE);
         mStatusBarTraffic_hide.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.STATUS_BAR_TRAFFIC_HIDE, 1) == 1)); 
+
+        mStatusBarTraffic_summary = (ListPreference) findPreference(STATUS_BAR_TRAFFIC_SUMMARY);
+        mStatusBarTraffic_summary.setOnPreferenceChangeListener(this);
+        mStatusBarTraffic_summary.setValue((Settings.System.getInt(resolver,
+                        Settings.System.STATUS_BAR_TRAFFIC_SUMMARY, 3000)) + "");
 
         mStatusBarQuickPeek = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_QUICK_PEEK);
         mStatusBarQuickPeek.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
@@ -322,6 +329,12 @@ public class Toolbar extends SettingsPreferenceFragment
             Integer.valueOf(val));
             int index = mNotificationsBehavior.findIndexOfValue(val);
             mNotificationsBehavior.setSummary(mNotificationsBehavior.getEntries()[index]);
+            return true;
+        } else if (preference == mStatusBarTraffic_summary) {
+            int val = Integer.valueOf((String) newValue);
+            int index = mStatusBarTraffic_summary.findIndexOfValue((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_TRAFFIC_SUMMARY, val);
+            mStatusBarTraffic_summary.setSummary(mStatusBarTraffic_summary.getEntries()[index]);
             return true;
         }
         return false;

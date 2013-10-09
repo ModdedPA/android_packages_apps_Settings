@@ -146,6 +146,7 @@
     <string name="tool_bar_ui">User Inferface</string>
     <string name="tool_bar_qs">Quick Settings</string>
     <string name="tool_bar_notification">Notification Drawer</string>
+    <string name="tool_bar_traffic">Status bar Network Traffic</string>
 
     <!-- Halo -->
     <string name="halo_settings_title">Halo</string>
@@ -613,6 +614,16 @@
     <string name="network_speed_style_reset">Reset</string>
     <string name="network_speed_color_summary">Change the color of network speed indicator</string>
     <string name="status_bar_traffic_use_icon_color">Use status bar icon color</string>
+
+    <!-- Network speed summary traffic -->
+    <string name="network_speed_summary">Show summary of traffic</string>
+    <string name="traffic_timeout_0s">Don\'t show</string>
+    <string name="traffic_timeout_3s">3 seconds</string>
+    <string name="traffic_timeout_5s">5 seconds</string>
+    <string name="traffic_timeout_8s">8 seconds</string>
+    <string name="traffic_timeout_10s">10 seconds</string>
+    <string name="traffic_timeout_15s">15 seconds</string>
+    <string name="traffic_timeout_25s">25 seconds</string>
 
     <!-- Statusbar Quick Peek -->
     <string name="statusbar_quick_peek_title">Quick Peek</string>

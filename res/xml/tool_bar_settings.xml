@@ -179,8 +179,6 @@
 
     </PreferenceCategory>
 
-    </PreferenceCategory>
-
     <PreferenceCategory
         android:title="@string/tool_bar_listview">
 

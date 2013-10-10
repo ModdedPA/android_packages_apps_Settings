@@ -157,19 +157,6 @@
         <item>3</item>
     </string-array>
 
-    <!-- Performance Profiles -->
-    <string-array name="perf_profile_entries" translatable="false">
-        <item>@string/perf_profile_pwrsv</item>
-        <item>@string/perf_profile_bal</item>
-        <item>@string/perf_profile_perf</item>
-    </string-array>
-
-    <string-array name="perf_profile_values" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
     <!--- Volume key cursor control -->
     <string-array name="volume_key_cursor_control_entries">
         <item>@string/volume_key_cursor_control_off</item>
@@ -202,5 +189,4 @@
         <item>15000</item>
         <item>25000</item>
     </string-array>
-
 </resources>

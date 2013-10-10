@@ -675,8 +675,6 @@
     <!-- Notification Behavior Preferences -->
     <string name="notification_behaviour_title">Notification behavior</string>
 
-    <string name="less_notification_sounds_summary">Limit the notification sounds of each app to only play once per set time period</string>
-
     <!-- Language & input -->
     <string name="volume_key_cursor_control_title">Volume key cursor control</string>
     <string name="volume_key_cursor_control_off">Disabled</string>

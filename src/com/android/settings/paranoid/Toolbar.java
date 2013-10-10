@@ -16,6 +16,7 @@
 
 package com.android.settings.paranoid;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -88,6 +89,7 @@ public class Toolbar extends SettingsPreferenceFragment
         addPreferencesFromResource(R.xml.tool_bar_settings);
         PreferenceScreen prefSet = getPreferenceScreen();
         mContext = getActivity();
+	ContentResolver resolver = getActivity().getContentResolver();
 
         mQuickPullDown = (CheckBoxPreference) prefSet.findPreference(KEY_QUICK_PULL_DOWN);
         mQuickPullDown.setChecked(Settings.System.getInt(mContext.getContentResolver(),
@@ -294,6 +296,8 @@ public class Toolbar extends SettingsPreferenceFragment
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+	ContentResolver resolver = getActivity().getContentResolver();  
+
         if (preference == mAmPmStyle) {
             int statusBarAmPmSize = Integer.valueOf((String) newValue);
             int index = mAmPmStyle.findIndexOfValue((String) newValue);

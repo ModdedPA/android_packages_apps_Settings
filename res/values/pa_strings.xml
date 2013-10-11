@@ -76,6 +76,13 @@
     <!-- Customization main menu category heading [CHAR LIMIT=40] -->
     <string name="header_category_customization">Customization</string>
 
+    <string name="lockscreen_target_reset_title">Reset</string>
+    <string name="lockscreen_target_empty">Empty</string>
+    <string name="picker_activities">Activities</string>
+    <string name="select_custom_app_title">Select custom app</string>
+    <string name="select_custom_activity_title">Select custom activity</string>
+    <string name="profile_applist_title">Apps</string>
+
     <!-- Lock screen sub menu [CHAR LIMIT=30] -->
     <string name="lock_screen_settings">Lock screen</string>
     <!-- Allow rotation -->
@@ -719,5 +726,9 @@
     <string name="navring_action_google_now">Google Now</string>
     <string name="navring_choose_action_title">Choose action</string>
     <string name="lockscreen_target_info">Drag the slider to targets to assign shortcuts</string>
+
+    <!-- Reset Profiles -->
+    <string name="profile_reset_title">Reset</string>
+    <string name="profile_reset_message">Delete all user created profiles and app groups and restore them to default?</string>
 
 </resources>

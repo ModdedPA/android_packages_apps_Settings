@@ -16,8 +16,11 @@
 
 package com.android.settings.paranoid;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;  
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -26,10 +29,14 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
+import android.text.Spannable; 
+import android.widget.EditText;  
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
+
+import java.util.ArrayList;
 
 public class Toolbar extends SettingsPreferenceFragment
         implements Preference.OnPreferenceChangeListener {
@@ -57,6 +64,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private static final String KEY_RECENTS_RAM_BAR = "recents_ram_bar";
     private static final String KEY_NOTIFICATION_BEHAVIOUR = "notifications_behaviour";
     private static final String STATUS_BAR_TRAFFIC_SUMMARY = "status_bar_traffic_summary";   
+    private static final String KEY_LOW_BATTERY_WARNING_POLICY = "pref_low_battery_warning_policy";   
 
     private Preference mRamBar;
 
@@ -66,6 +74,7 @@ public class Toolbar extends SettingsPreferenceFragment
     private ListPreference mStatusBarMaxNotif;
     private ListPreference mNotificationsBehavior;
     private ListPreference mStatusBarTraffic_summary;  
+    private ListPreference mLowBatteryWarning;   
     private CheckBoxPreference mQuickPullDown;
     private CheckBoxPreference mShowClock;
     private CheckBoxPreference mCircleBattery;
@@ -82,6 +91,10 @@ public class Toolbar extends SettingsPreferenceFragment
     private PreferenceCategory mStatusCategory;
 
     private Context mContext;
+
+    private final ArrayList<Preference> mAllPrefs = new ArrayList<Preference>();
+    private final ArrayList<CheckBoxPreference> mResetCbPrefs
+            = new ArrayList<CheckBoxPreference>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,6 +121,15 @@ public class Toolbar extends SettingsPreferenceFragment
         mStatusBarTraffic_summary.setOnPreferenceChangeListener(this);
         mStatusBarTraffic_summary.setValue((Settings.System.getInt(resolver,
                         Settings.System.STATUS_BAR_TRAFFIC_SUMMARY, 3000)) + "");
+
+        // Low battery warning
+        mLowBatteryWarning = (ListPreference) findPreference(KEY_LOW_BATTERY_WARNING_POLICY);
+        int lowBatteryWarning = Settings.System.getInt(getActivity().getContentResolver(),
+                                    Settings.System.POWER_UI_LOW_BATTERY_WARNING_POLICY, 0);
+        mLowBatteryWarning.setValue(String.valueOf(lowBatteryWarning));
+        mLowBatteryWarning.setSummary(mLowBatteryWarning.getEntry());
+        mLowBatteryWarning.setOnPreferenceChangeListener(this);   
+
 
         mStatusBarQuickPeek = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_QUICK_PEEK);
         mStatusBarQuickPeek.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
@@ -289,6 +311,26 @@ public class Toolbar extends SettingsPreferenceFragment
         super.onResume();
         updateRamBar();
     }
+
+    private void updateCustomLabelTextSummary() {
+        mCustomLabelText = Settings.System.getString(getActivity().getContentResolver(),
+                Settings.System.CUSTOM_CARRIER_LABEL);
+        if (mCustomLabelText == null || mCustomLabelText.length() == 0) {
+            mCustomLabel.setSummary(R.string.custom_carrier_label_notset);
+        } else {
+            mCustomLabel.setSummary(mCustomLabelText);
+        }
+    }
+
+    private CheckBoxPreference findAndInitCheckboxPref(String key) {
+        CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
+        if (pref == null) {
+            throw new IllegalArgumentException("Cannot find preference with key = " + key);
+        }
+        mAllPrefs.add(pref);
+        mResetCbPrefs.add(pref);
+        return pref;
+    }   
 
     @Override
     public void onPause() {

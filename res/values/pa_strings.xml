@@ -869,4 +869,11 @@ USB networks). This setting is reset on reboot</string>
  open for intrusions on all connected networks, including GSM data network!\n\nOnly use this feature
  when you are connected on trusted networks.\n\nDo you really want to enable this function?</string>
 
+    <!-- Pin keypad shuffler -->
+    <string name="lock_numpad_random_title">Change the order of PIN pad numbers</string>
+    <string name="lock_numpad_random_dialog_title">PIN pad random order</string>
+    <string name="lock_numpad_random_off">Disabled</string>
+    <string name="lock_numpad_random_always">Always</string>
+    <string name="lock_numpad_random_on_request">On request</string>
+
 </resources>

@@ -82,7 +82,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
     private static final String KEY_CREDENTIALS_MANAGER = "credentials_management";
     private static final String KEY_NOTIFICATION_ACCESS = "manage_notification_access";
     private static final String PACKAGE_MIME_TYPE = "application/vnd.android.package-archive";
-    private static final String LOCK_SYNC_ENCRYPTION_PASSWORD = "lock_sync_encryption_password";
+    private static final String LOCK_NUMPAD_RANDOM = "lock_numpad_random"; 
 
     private static final String KEY_APP_SECURITY_CATEGORY = "app_security";
 
@@ -108,6 +108,8 @@ public class SecuritySettings extends SettingsPreferenceFragment
     private CheckBoxPreference mPowerButtonInstantlyLocks;
 
     private Preference mNotificationAccess;
+    
+    private ListPreference mLockNumpadRandom; 
 
     private boolean mIsPrimary;
 
@@ -201,6 +203,13 @@ public class SecuritySettings extends SettingsPreferenceFragment
         if (mLockAfter != null) {
             setupLockAfterPreference();
             updateLockAfterPreferenceSummary();
+
+	    // Lock Numpad Random
+            mLockNumpadRandom = (ListPreference) root.findPreference(LOCK_NUMPAD_RANDOM);
+            mLockNumpadRandom.setValue(String.valueOf(Settings.Secure.getInt(resolver,
+                    Settings.Secure.LOCK_NUMPAD_RANDOM, 0)));
+            mLockNumpadRandom.setSummary(mLockNumpadRandom.getEntry());
+            mLockNumpadRandom.setOnPreferenceChangeListener(this); 
         }
 
         // biometric weak liveliness
@@ -578,6 +587,12 @@ public class SecuritySettings extends SettingsPreferenceFragment
                 Log.e("SecuritySettings", "could not persist lockAfter timeout setting", e);
             }
             updateLockAfterPreferenceSummary();
+        } else if (preference == mLockNumpadRandom) {
+            Settings.Secure.putInt(getActivity().getContentResolver(),
+                    Settings.Secure.LOCK_NUMPAD_RANDOM,
+                    Integer.valueOf((String) value));
+            mLockNumpadRandom.setValue(String.valueOf(value));
+            mLockNumpadRandom.setSummary(mLockNumpadRandom.getEntry()); 
         }
         return true;
     }

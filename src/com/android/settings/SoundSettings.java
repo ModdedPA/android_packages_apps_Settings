@@ -88,6 +88,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private static final String KEY_VOLBTN_MUSIC_CTRL = "music_controls";
     private static final String KEY_VOLUME_WAKE = "volume_wake";
     private static final String KEY_VOLUME_ADJUST_SOUNDS = "volume_adjust_sounds";
+    private static final String KEY_SAFE_HEADSET_VOLUME = "safe_headset_volume";
     private static final String PREF_LESS_NOTIFICATION_SOUNDS = "less_notification_sounds";
 
     private static final String[] NEED_VOICE_CAPABILITY = {
@@ -114,6 +115,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mVolBtnMusicCtrl;
     private CheckBoxPreference mVolumeWake;
     private CheckBoxPreference mVolumeAdjustSounds;
+    private CheckBoxPreference mSafeHeadsetVolume;
 
     private Runnable mRingtoneLookupRunnable;
 
@@ -209,6 +211,10 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         mVolumeAdjustSounds.setPersistent(false);
         mVolumeAdjustSounds.setChecked(Settings.System.getInt(resolver,
                 Settings.System.VOLUME_ADJUST_SOUNDS_ENABLED, 1) != 0);
+
+        mSafeHeadsetVolume = (CheckBoxPreference) findPreference(KEY_SAFE_HEADSET_VOLUME);
+        mSafeHeadsetVolume.setChecked(Settings.System.getInt(resolver,
+                   Settings.System.SAFE_HEADSET_VOLUME, 1) == 1);
 
         mVolBtnMusicCtrl = (CheckBoxPreference) findPreference(KEY_VOLBTN_MUSIC_CTRL);
         mVolBtnMusicCtrl.setChecked(Settings.System.getInt(getContentResolver(),
@@ -400,7 +406,10 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         } else if (preference == mVolBtnMusicCtrl) {
             Settings.System.putInt(getContentResolver(),
                     Settings.System.VOLBTN_MUSIC_CONTROLS, mVolBtnMusicCtrl.isChecked() ? 1 : 0);
-        } else if (preference == mConvertSoundToVibration) {
+        } else if (preference == mSafeHeadsetVolume) {
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.SAFE_HEADSET_VOLUME, mSafeHeadsetVolume.isChecked() ? 1 : 0);
+        }else if (preference == mConvertSoundToVibration) {
             Settings.System.putInt(getContentResolver(), Settings.System.NOTIFICATION_CONVERT_SOUND_TO_VIBRATION,
                     mConvertSoundToVibration.isChecked() ? 1 : 0);
         } else if (preference == mMusicFx) {

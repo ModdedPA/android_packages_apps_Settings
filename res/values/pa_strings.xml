@@ -631,6 +631,8 @@
 
     <string name="volume_adjust_sounds_enable_title">Volume adjust sound</string>
     <string name="volume_adjust_sounds_enable_summary">Play sound when adjusting volume with hard keys</string>
+    
+    <string name="safe_headset_volume_title">Safe Headset Volume</string>
 
     <!-- Turn on display when power connected; turn off display when power disconnected -->
     <string name="wake_when_plugged_or_unplugged_title">Wake on plug</string>

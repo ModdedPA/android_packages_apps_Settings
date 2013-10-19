@@ -137,6 +137,11 @@
             android:title="@string/volume_adjust_sounds_enable_title"
             android:summary="@string/volume_adjust_sounds_enable_summary"
             android:persistent="true" />
+    
+    <CheckBoxPreference
+            android:key="safe_headset_volume"
+            android:title="@string/safe_headset_volume_title"
+            android:persistent="true" />
 
     <ListPreference
             android:key="less_notification_sounds"

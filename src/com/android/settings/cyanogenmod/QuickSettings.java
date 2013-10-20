@@ -30,9 +30,11 @@ import static com.android.internal.util.cm.QSUtils.deviceSupportsUsbTether;
 import static com.android.internal.util.cm.QSUtils.deviceSupportsWifiDisplay;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.MultiSelectListPreference;
@@ -116,14 +118,20 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
 
         // Add the sound mode
         mRingMode = (MultiSelectListPreference) prefSet.findPreference(EXP_RING_MODE);
-        String storedRingMode = Settings.System.getString(resolver,
-                Settings.System.EXPANDED_RING_MODE);
-        if (storedRingMode != null) {
-            String[] ringModeArray = TextUtils.split(storedRingMode, SEPARATOR);
-            mRingMode.setValues(new HashSet<String>(Arrays.asList(ringModeArray)));
-            updateSummary(storedRingMode, mRingMode, R.string.pref_ring_mode_summary);
+
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator.hasVibrator()) {
+            String storedRingMode = Settings.System.getString(resolver,
+                    Settings.System.EXPANDED_RING_MODE);
+            if (storedRingMode != null) {
+                String[] ringModeArray = TextUtils.split(storedRingMode, SEPARATOR);
+                mRingMode.setValues(new HashSet<String>(Arrays.asList(ringModeArray)));
+                updateSummary(storedRingMode, mRingMode, R.string.pref_ring_mode_summary);
+            }
+            mRingMode.setOnPreferenceChangeListener(this);
+        } else {
+            mStaticTiles.removePreference(mRingMode);
         }
-        mRingMode.setOnPreferenceChangeListener(this);
 
         // Add the network mode preference
         mNetworkMode = (ListPreference) prefSet.findPreference(EXP_NETWORK_MODE);

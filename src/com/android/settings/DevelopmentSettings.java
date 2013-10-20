@@ -942,9 +942,9 @@ public class DevelopmentSettings extends PreferenceFragment
     private void writeCpuUsageOptions() {
         boolean value = mShowCpuUsage.isChecked();
         Settings.Global.putInt(getActivity().getContentResolver(),
-                Settings.Global.SHOW_PROCESSES, value ? 1 : 0);
+                Settings.Global.SHOW_CPU, value ? 1 : 0);
         Intent service = (new Intent())
-                .setClassName("com.android.systemui", "com.android.systemui.LoadAverageService");
+                .setClassName("com.android.systemui", "com.android.systemui.CPUInfoService");
         if (value) {
             getActivity().startService(service);
         } else {

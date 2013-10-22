@@ -32,6 +32,8 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.bluetooth.DeviceListPreferenceFragment;
 
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
+
 public class Halo extends SettingsPreferenceFragment
         implements Preference.OnPreferenceChangeListener {
 
@@ -45,6 +47,8 @@ public class Halo extends SettingsPreferenceFragment
     private static final String KEY_HALO_REVERSED = "halo_reversed";
     private static final String KEY_HALO_SIZE = "halo_size";
     private static final String KEY_HALO_PAUSE = "halo_pause";
+    private static final String KEY_HALO_COLORS = "halo_colors";
+    private static final String KEY_HALO_CIRCLE_COLOR = "halo_circle_color";
 
     private ListPreference mHaloState;
     private ListPreference mHaloSize;
@@ -57,6 +61,9 @@ public class Halo extends SettingsPreferenceFragment
     private CheckBoxPreference mHaloHide;
     private CheckBoxPreference mHaloReversed;
     private CheckBoxPreference mHaloPause;
+    private CheckBoxPreference mHaloColors;
+    
+    private ColorPickerPreference mHaloCircleColor;
 
     private Context mContext;
     private INotificationManager mNotificationManager;
@@ -130,6 +137,19 @@ public class Halo extends SettingsPreferenceFragment
             // So what
         }
         mHaloSize.setOnPreferenceChangeListener(this);
+        
+        mHaloColors = (CheckBoxPreference) prefSet.findPreference(KEY_HALO_COLORS);
+        mHaloColors.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+        		Settings.System.HALO_COLOR, 0) == 1);
+        
+        mHaloCircleColor = (ColorPickerPreference) prefSet.findPreference(KEY_HALO_CIRCLE_COLOR);
+        mHaloCircleColor.setOnPreferenceChangeListener(this);
+        int color = Settings.System.getInt(mContext.getContentResolver(), 
+        		Settings.System.HALO_CIRCLE_COLOR, 0xff33b5b3);
+        String hex = ColorPickerPreference.convertToARGB(color);
+    	mHaloCircleColor.setSummary(hex);
+    	Settings.System.putInt(getActivity().getContentResolver(),
+    			Settings.System.HALO_CIRCLE_COLOR, color);
     }
 
     private boolean isHaloPolicyBlack() {
@@ -167,7 +187,10 @@ public class Halo extends SettingsPreferenceFragment
             Settings.System.putInt(mContext.getContentResolver(),
                     Settings.System.HALO_PAUSE, mHaloPause.isChecked()
                     ? 1 : 0);
-        } 
+        } else if (preference == mHaloColors) {
+        	Settings.System.putInt(mContext.getContentResolver(),
+        			Settings.System.HALO_COLOR, mHaloColors.isChecked() ? 1 : 0);
+        }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
@@ -195,6 +218,12 @@ public class Halo extends SettingsPreferenceFragment
                 // System dead
             }
             return true;
+        } else if (preference == mHaloCircleColor) {
+        	String hex = ColorPickerPreference.convertToARGB(
+        			Integer.valueOf(String.valueOf(newValue)));
+        	preference.setSummary(hex);
+        	Settings.System.putInt(getActivity().getContentResolver(),
+        			Settings.System.HALO_CIRCLE_COLOR, ColorPickerPreference.convertToColorInt(hex));
         }
         return false;
     }

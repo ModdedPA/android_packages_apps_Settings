@@ -84,6 +84,10 @@ public class SecuritySettings extends SettingsPreferenceFragment
     private static final String PACKAGE_MIME_TYPE = "application/vnd.android.package-archive";
     private static final String LOCK_SYNC_ENCRYPTION_PASSWORD = "lock_sync_encryption_password";
 
+    // crDroid additions
+    private static final String LOCK_NUMPAD_RANDOM = "lock_numpad_random";
+    private static final String CATEGORY_ADDITIONAL = "additional_options";  
+
     private static final String KEY_APP_SECURITY_CATEGORY = "app_security";
 
     private PackageManager mPM;
@@ -109,6 +113,9 @@ public class SecuritySettings extends SettingsPreferenceFragment
 
     private Preference mNotificationAccess;
 
+    // crDroid additions
+    private ListPreference mLockNumpadRandom; 
+
     private boolean mIsPrimary;
 
     @Override
@@ -130,6 +137,13 @@ public class SecuritySettings extends SettingsPreferenceFragment
         }
         addPreferencesFromResource(R.xml.security_settings);
         root = getPreferenceScreen();
+
+	// crDroid - allows for calling the settings screen with stock or crDroid view
+        boolean isCrDroidSecurity = false;
+        Bundle args = getArguments();
+        if (args != null) {
+            isCrDroidSecurity = args.getBoolean("crdroid_security");
+        }
 
         // Add options for lock/unlock screen
         int resid = 0;
@@ -183,7 +197,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
             }
         }
 
-        if (mIsPrimary) {
+        if (mIsPrimary && !isCrDroidSecurity) {
             switch (dpm.getStorageEncryptionStatus()) {
             case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE:
                 // The device is currently encrypted.
@@ -202,6 +216,32 @@ public class SecuritySettings extends SettingsPreferenceFragment
             setupLockAfterPreference();
             updateLockAfterPreferenceSummary();
         }
+
+	// crDroid additions
+	if (isCrDroidSecurity) {
+
+	    // Add the additional crDroid settings
+            addPreferencesFromResource(R.xml.security_settings_crdroid);
+
+	    // Lock Numpad Random
+            mLockNumpadRandom = (ListPreference) root.findPreference(LOCK_NUMPAD_RANDOM);
+            mLockNumpadRandom.setValue(String.valueOf(Settings.Secure.getInt(getContentResolver(),
+                    Settings.Secure.LOCK_NUMPAD_RANDOM, 0)));
+            mLockNumpadRandom.setSummary(mLockNumpadRandom.getEntry());
+            mLockNumpadRandom.setOnPreferenceChangeListener(this);
+
+	    if ((!mLockPatternUtils.isSecure() && mLockPatternUtils.isLockScreenDisabled())
+                    || (mLockPatternUtils.isLockPatternEnabled())) {
+                mLockNumpadRandom.setEnabled(false);
+            } else if (mLockPatternUtils.isLockPasswordEnabled()) {
+                mLockNumpadRandom.setEnabled(mLockPatternUtils.isLockNumericPasswordEnabled()); 
+            } else {
+                mLockNumpadRandom.setEnabled(false); 
+            }
+
+	    final PreferenceGroup additionalPrefs =
+                    (PreferenceGroup) findPreference(CATEGORY_ADDITIONAL);
+	}
 
         // biometric weak liveliness
         mBiometricWeakLiveliness =
@@ -226,87 +266,68 @@ public class SecuritySettings extends SettingsPreferenceFragment
         }
 
         // Append the rest of the settings
-        addPreferencesFromResource(R.xml.security_settings_misc);
+        if (!isCrDroidSecurity) {
+            addPreferencesFromResource(R.xml.security_settings_misc);
 
-        // Do not display SIM lock for devices without an Icc card
-        TelephonyManager tm = TelephonyManager.getDefault();
-        if (!mIsPrimary || !tm.hasIccCard()) {
-            root.removePreference(root.findPreference(KEY_SIM_LOCK));
-        } else {
-            // Disable SIM lock if sim card is missing or unknown
-            if ((TelephonyManager.getDefault().getSimState() ==
-                                 TelephonyManager.SIM_STATE_ABSENT) ||
-                (TelephonyManager.getDefault().getSimState() ==
-                                 TelephonyManager.SIM_STATE_UNKNOWN)) {
-                root.findPreference(KEY_SIM_LOCK).setEnabled(false);
-            }
-        }
-
-        // Show password
-        mShowPassword = (CheckBoxPreference) root.findPreference(KEY_SHOW_PASSWORD);
-
-        // Credential storage
-        final UserManager um = (UserManager) getActivity().getSystemService(Context.USER_SERVICE);
-        if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
-            mKeyStore = KeyStore.getInstance();
-            Preference credentialStorageType = root.findPreference(KEY_CREDENTIAL_STORAGE_TYPE);
-
-            final int storageSummaryRes =
-                mKeyStore.isHardwareBacked() ? R.string.credential_storage_type_hardware
-                        : R.string.credential_storage_type_software;
-            credentialStorageType.setSummary(storageSummaryRes);
-
-            mResetCredentials = root.findPreference(KEY_RESET_CREDENTIALS);
-        } else {
-            removePreference(KEY_CREDENTIALS_MANAGER);
-        }
-
-        // Application install
-        PreferenceGroup deviceAdminCategory= (PreferenceGroup)
-                root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
-        mToggleAppInstallation = (CheckBoxPreference) findPreference(
-                KEY_TOGGLE_INSTALL_APPLICATIONS);
-        mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
-
-        // Side loading of apps.
-        mToggleAppInstallation.setEnabled(mIsPrimary);
-
-        // Package verification, only visible to primary user and if enabled
-        mToggleVerifyApps = (CheckBoxPreference) findPreference(KEY_TOGGLE_VERIFY_APPLICATIONS);
-        if (mIsPrimary && showVerifierSetting()) {
-            if (isVerifierInstalled()) {
-                mToggleVerifyApps.setChecked(isVerifyAppsEnabled());
+            // Do not display SIM lock for devices without an Icc card
+            TelephonyManager tm = TelephonyManager.getDefault();
+            if (!mIsPrimary || !tm.hasIccCard()) {
+                root.removePreference(root.findPreference(KEY_SIM_LOCK));
             } else {
-                mToggleVerifyApps.setChecked(false);
-                mToggleVerifyApps.setEnabled(false);
-            }
-        } else {
-            if (deviceAdminCategory != null) {
-                deviceAdminCategory.removePreference(mToggleVerifyApps);
-            } else {
-                mToggleVerifyApps.setEnabled(false);
-            }
-        }
-        
-        mNotificationAccess = findPreference(KEY_NOTIFICATION_ACCESS);
-        if (mNotificationAccess != null) {
-            final int total = NotificationAccessSettings.getListenersCount(mPM);
-            if (total == 0) {
-                if (deviceAdminCategory != null) {
-                    deviceAdminCategory.removePreference(mNotificationAccess);
+                // Disable SIM lock if sim card is missing or unknown
+                if ((TelephonyManager.getDefault().getSimState() ==
+                                     TelephonyManager.SIM_STATE_ABSENT) ||
+                    (TelephonyManager.getDefault().getSimState() ==
+                                     TelephonyManager.SIM_STATE_UNKNOWN)) {
+                    root.findPreference(KEY_SIM_LOCK).setEnabled(false);
                 }
+            }
+
+            // Show password
+            mShowPassword = (CheckBoxPreference) root.findPreference(KEY_SHOW_PASSWORD);
+
+            // Credential storage, only for primary user
+            if (mIsPrimary) {
+                final UserManager um = (UserManager) getActivity().getSystemService(Context.USER_SERVICE);
+                if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
+                mKeyStore = KeyStore.getInstance();
+                Preference credentialStorageType = root.findPreference(KEY_CREDENTIAL_STORAGE_TYPE);
+
+                final int storageSummaryRes =
+                    mKeyStore.isHardwareBacked() ? R.string.credential_storage_type_hardware
+                    : R.string.credential_storage_type_software;
+                credentialStorageType.setSummary(storageSummaryRes);
+
+                mResetCredentials = root.findPreference(KEY_RESET_CREDENTIALS);
+		}
             } else {
-                final int n = getNumEnabledNotificationListeners();
-                if (n == 0) {
-                    mNotificationAccess.setSummary(getResources().getString(
-                            R.string.manage_notification_access_summary_zero));
+                removePreference(KEY_CREDENTIALS_MANAGER);
+            }
+
+            mToggleAppInstallation = (CheckBoxPreference) findPreference(
+                    KEY_TOGGLE_INSTALL_APPLICATIONS);
+            mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
+
+            // Package verification, only visible to primary user and if enabled
+            mToggleVerifyApps = (CheckBoxPreference) findPreference(KEY_TOGGLE_VERIFY_APPLICATIONS);
+            if (mIsPrimary && showVerifierSetting()) {
+                if (isVerifierInstalled()) {
+                    mToggleVerifyApps.setChecked(isVerifyAppsEnabled());
                 } else {
-                    mNotificationAccess.setSummary(String.format(getResources().getQuantityString(
-                            R.plurals.manage_notification_access_summary_nonzero,
-                            n, n)));
+                    mToggleVerifyApps.setChecked(false);
+                    mToggleVerifyApps.setEnabled(false);
+                }
+            } else {
+                PreferenceGroup deviceAdminCategory= (PreferenceGroup)
+                        root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
+                if (deviceAdminCategory != null) {
+                    deviceAdminCategory.removePreference(mToggleVerifyApps);
+                } else {
+                    mToggleVerifyApps.setEnabled(false);
                 }
             }
         }
+
         return root;
     }
 
@@ -578,6 +599,12 @@ public class SecuritySettings extends SettingsPreferenceFragment
                 Log.e("SecuritySettings", "could not persist lockAfter timeout setting", e);
             }
             updateLockAfterPreferenceSummary();
+	} else if (preference == mLockNumpadRandom) {
+            Settings.Secure.putInt(getActivity().getContentResolver(),
+                    Settings.Secure.LOCK_NUMPAD_RANDOM,
+                    Integer.valueOf((String) value));
+            mLockNumpadRandom.setValue(String.valueOf(value));
+            mLockNumpadRandom.setSummary(mLockNumpadRandom.getEntry());
         }
         return true;
     }

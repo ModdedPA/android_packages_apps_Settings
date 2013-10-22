@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="additional_options"
+        android:title="@string/additional_options_title">
+
+	<ListPreference
+            android:key="lock_numpad_random"
+            android:entries="@array/lock_numpad_random_entries"
+            android:entryValues="@array/lock_numpad_random_values"
+            android:title="@string/lock_numpad_random_title"
+            android:dialogTitle="@string/lock_numpad_random_dialog_title" /> 
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

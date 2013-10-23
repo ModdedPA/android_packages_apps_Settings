@@ -49,6 +49,7 @@ public class Halo extends SettingsPreferenceFragment
     private static final String KEY_HALO_PAUSE = "halo_pause";
     private static final String KEY_HALO_COLORS = "halo_colors";
     private static final String KEY_HALO_CIRCLE_COLOR = "halo_circle_color";
+    private static final String KEY_HALO_EFFECT_COLOR = "halo_effect_color";
 
     private ListPreference mHaloState;
     private ListPreference mHaloSize;
@@ -64,6 +65,7 @@ public class Halo extends SettingsPreferenceFragment
     private CheckBoxPreference mHaloColors;
     
     private ColorPickerPreference mHaloCircleColor;
+    private ColorPickerPreference mHaloEffectColor;
 
     private Context mContext;
     private INotificationManager mNotificationManager;
@@ -148,8 +150,15 @@ public class Halo extends SettingsPreferenceFragment
         		Settings.System.HALO_CIRCLE_COLOR, 0xff33b5b3);
         String hex = ColorPickerPreference.convertToARGB(color);
     	mHaloCircleColor.setSummary(hex);
-    	Settings.System.putInt(getActivity().getContentResolver(),
-    			Settings.System.HALO_CIRCLE_COLOR, color);
+    	mHaloCircleColor.setEnabled(mHaloColors.isChecked());
+    	
+    	mHaloEffectColor = (ColorPickerPreference) prefSet.findPreference(KEY_HALO_EFFECT_COLOR);
+        mHaloEffectColor.setOnPreferenceChangeListener(this);
+        color = Settings.System.getInt(mContext.getContentResolver(), 
+        		Settings.System.HALO_EFFECT_COLOR, 0xff33b5b3);
+        hex = ColorPickerPreference.convertToARGB(color);
+    	mHaloEffectColor.setSummary(hex);
+    	mHaloEffectColor.setEnabled(mHaloColors.isChecked());
     }
 
     private boolean isHaloPolicyBlack() {
@@ -190,6 +199,8 @@ public class Halo extends SettingsPreferenceFragment
         } else if (preference == mHaloColors) {
         	Settings.System.putInt(mContext.getContentResolver(),
         			Settings.System.HALO_COLOR, mHaloColors.isChecked() ? 1 : 0);
+        	mHaloCircleColor.setEnabled(mHaloColors.isChecked());
+        	mHaloEffectColor.setEnabled(mHaloColors.isChecked());
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -224,6 +235,12 @@ public class Halo extends SettingsPreferenceFragment
         	preference.setSummary(hex);
         	Settings.System.putInt(getActivity().getContentResolver(),
         			Settings.System.HALO_CIRCLE_COLOR, ColorPickerPreference.convertToColorInt(hex));
+        } else if (preference == mHaloEffectColor) {
+        	String hex = ColorPickerPreference.convertToARGB(
+        			Integer.valueOf(String.valueOf(newValue)));
+        	preference.setSummary(hex);
+        	Settings.System.putInt(getActivity().getContentResolver(),
+        			Settings.System.HALO_EFFECT_COLOR, ColorPickerPreference.convertToColorInt(hex));
         }
         return false;
     }

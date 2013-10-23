@@ -94,4 +94,8 @@
             android:title="@string/halo_circle_color"
             android:defaultValue="#33b5e5" />
 
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="halo_effect_color"
+            android:title="@string/halo_effect_color"
+            android:defaultValue="#33b5e5" />
 </PreferenceScreen>

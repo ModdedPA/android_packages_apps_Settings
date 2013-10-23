@@ -50,6 +50,8 @@ public class Halo extends SettingsPreferenceFragment
     private static final String KEY_HALO_COLORS = "halo_colors";
     private static final String KEY_HALO_CIRCLE_COLOR = "halo_circle_color";
     private static final String KEY_HALO_EFFECT_COLOR = "halo_effect_color";
+    private static final String KEY_HALO_NOTIF_TITLE_COLOR = "halo_notif_title_color";
+    private static final String KEY_HALO_NOTIF_DESC_COLOR = "halo_notif_desc_color";
 
     private ListPreference mHaloState;
     private ListPreference mHaloSize;
@@ -66,6 +68,8 @@ public class Halo extends SettingsPreferenceFragment
     
     private ColorPickerPreference mHaloCircleColor;
     private ColorPickerPreference mHaloEffectColor;
+    private ColorPickerPreference mHaloNotifTitleColor;
+    private ColorPickerPreference mHaloNotifDescColor;
 
     private Context mContext;
     private INotificationManager mNotificationManager;
@@ -158,7 +162,26 @@ public class Halo extends SettingsPreferenceFragment
         		Settings.System.HALO_EFFECT_COLOR, 0xff33b5b3);
         hex = ColorPickerPreference.convertToARGB(color);
     	mHaloEffectColor.setSummary(hex);
+    	mHaloEffectColor.setNewPreviewColor(color);
     	mHaloEffectColor.setEnabled(mHaloColors.isChecked());
+    	
+    	mHaloNotifTitleColor = (ColorPickerPreference) prefSet.findPreference(KEY_HALO_NOTIF_TITLE_COLOR);
+        mHaloNotifTitleColor.setOnPreferenceChangeListener(this);
+        color = Settings.System.getInt(mContext.getContentResolver(), 
+        		Settings.System.HALO_NOTIFICATION_TITLE_COLOR, 0xffffffff);
+        hex = ColorPickerPreference.convertToARGB(color);
+    	mHaloNotifTitleColor.setSummary(hex);
+    	mHaloNotifTitleColor.setNewPreviewColor(color);
+    	mHaloNotifTitleColor.setEnabled(mHaloColors.isChecked());
+
+    	mHaloNotifDescColor = (ColorPickerPreference) prefSet.findPreference(KEY_HALO_NOTIF_DESC_COLOR);
+        mHaloNotifDescColor.setOnPreferenceChangeListener(this);
+        color = Settings.System.getInt(mContext.getContentResolver(), 
+        		Settings.System.HALO_NOTIFICATION_DESC_COLOR, 0xff999999);
+        hex = ColorPickerPreference.convertToARGB(color);
+    	mHaloNotifDescColor.setSummary(hex);
+    	mHaloNotifDescColor.setNewPreviewColor(color);
+    	mHaloNotifDescColor.setEnabled(mHaloColors.isChecked());
     }
 
     private boolean isHaloPolicyBlack() {
@@ -201,6 +224,8 @@ public class Halo extends SettingsPreferenceFragment
         			Settings.System.HALO_COLOR, mHaloColors.isChecked() ? 1 : 0);
         	mHaloCircleColor.setEnabled(mHaloColors.isChecked());
         	mHaloEffectColor.setEnabled(mHaloColors.isChecked());
+        	mHaloNotifTitleColor.setEnabled(mHaloColors.isChecked());
+        	mHaloNotifDescColor.setEnabled(mHaloColors.isChecked());
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -241,6 +266,18 @@ public class Halo extends SettingsPreferenceFragment
         	preference.setSummary(hex);
         	Settings.System.putInt(getActivity().getContentResolver(),
         			Settings.System.HALO_EFFECT_COLOR, ColorPickerPreference.convertToColorInt(hex));
+        } else if (preference == mHaloNotifTitleColor) {
+        	String hex = ColorPickerPreference.convertToARGB(
+        			Integer.valueOf(String.valueOf(newValue)));
+        	preference.setSummary(hex);
+        	Settings.System.putInt(getActivity().getContentResolver(),
+        			Settings.System.HALO_NOTIFICATION_TITLE_COLOR, ColorPickerPreference.convertToColorInt(hex));
+        } else if (preference == mHaloNotifDescColor) {
+        	String hex = ColorPickerPreference.convertToARGB(
+        			Integer.valueOf(String.valueOf(newValue)));
+        	preference.setSummary(hex);
+        	Settings.System.putInt(getActivity().getContentResolver(),
+        			Settings.System.HALO_NOTIFICATION_DESC_COLOR, ColorPickerPreference.convertToColorInt(hex));
         }
         return false;
     }

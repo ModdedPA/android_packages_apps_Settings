@@ -94,4 +94,18 @@
             android:title="@string/halo_circle_color"
             android:defaultValue="#33b5e5" />
 
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="halo_effect_color"
+            android:title="@string/halo_effect_color"
+            android:defaultValue="#33b5e5" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="halo_notif_title_color"
+            android:title="@string/halo_notif_title_color"
+            android:defaultValue="#ffffff" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="halo_notif_desc_color"
+            android:title="@string/halo_notif_desc_color"
+            android:defaultValue="#999999" />
 </PreferenceScreen>

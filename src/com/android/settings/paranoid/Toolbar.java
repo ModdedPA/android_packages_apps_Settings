@@ -312,16 +312,6 @@ public class Toolbar extends SettingsPreferenceFragment
         updateRamBar();
     }
 
-    private CheckBoxPreference findAndInitCheckboxPref(String key) {
-        CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
-        if (pref == null) {
-            throw new IllegalArgumentException("Cannot find preference with key = " + key);
-        }
-        mAllPrefs.add(pref);
-        mResetCbPrefs.add(pref);
-        return pref;
-    }   
-
     @Override
     public void onPause() {
         super.onResume();

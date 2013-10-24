@@ -70,6 +70,9 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_POWER_FADE_EFFECT = "power_fade_effect";
     private static final String PREF_CUSTOM_CARRIER_LABEL = "custom_carrier_label";
 
+    private static final String PREF_SMART_COVER_CATEGORY = "smart_cover_category";
+    private static final String PREF_SMART_COVER_WAKE = "smart_cover_wake";
+
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
 
     private DisplayManager mDisplayManager;
@@ -77,6 +80,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mAccelerometer;
     private CheckBoxPreference mWakeWhenPluggedOrUnplugged;
     private CheckBoxPreference mPowerFadeEffect;
+    private CheckBoxPreference mSmartCoverWake;
     private WarnedListPreference mFontSizePref;
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
@@ -145,6 +149,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         mWakeWhenPluggedOrUnplugged.setChecked(Settings.Global.getInt(resolver,
                 Settings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED,
                 (wakeUpWhenPluggedOrUnpluggedConfig ? 1 : 0)) == 1);
+
+        mSmartCoverWake = (CheckBoxPreference) findPreference(PREF_SMART_COVER_WAKE);
+        mSmartCoverWake.setOnPreferenceChangeListener(this);
+        if(!getResources().getBoolean(com.android.internal.R.bool.config_lidControlsSleep)) {
+            PreferenceCategory smartCoverOptions = (PreferenceCategory)
+                    getPreferenceScreen().findPreference(PREF_SMART_COVER_CATEGORY);
+            getPreferenceScreen().removePreference(smartCoverOptions);
+        }
 
         mCustomLabel = findPreference(PREF_CUSTOM_CARRIER_LABEL);
         updateCustomLabelTextSummary();
@@ -435,7 +447,11 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     public boolean onPreferenceChange(Preference preference, Object objValue) {
         final String key = preference.getKey();
-        if (KEY_SCREEN_TIMEOUT.equals(key)) {
+        if (preference == mSmartCoverWake) {
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.LOCKSCREEN_LID_WAKE, (Boolean) objValue ? 1 : 0);
+            return true;
+        } else if (KEY_SCREEN_TIMEOUT.equals(key)) {
             int value = Integer.parseInt((String) objValue);
             try {
                 Settings.System.putInt(getContentResolver(), SCREEN_OFF_TIMEOUT, value);

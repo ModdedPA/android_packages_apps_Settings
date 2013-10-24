@@ -837,4 +837,9 @@
     <string name="kill_app_longpress_back">Kill app back button</string>
     <string name="kill_app_longpress_back_summary">Kill the foreground app by long-pressing the back key</string>   
 
+    <!-- Lockscreen Lid Settings -->
+    <string name="smart_cover_category_title">Smart cover</string>
+    <string name="smart_cover_wake_title">Smart cover wake</string>
+    <string name="smart_cover_wake_summary">Wakeup device when smart cover opens</string>  
+
 </resources>

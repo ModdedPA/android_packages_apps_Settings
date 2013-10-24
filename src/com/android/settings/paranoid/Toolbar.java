@@ -312,16 +312,6 @@ public class Toolbar extends SettingsPreferenceFragment
         updateRamBar();
     }
 
-    private void updateCustomLabelTextSummary() {
-        mCustomLabelText = Settings.System.getString(getActivity().getContentResolver(),
-                Settings.System.CUSTOM_CARRIER_LABEL);
-        if (mCustomLabelText == null || mCustomLabelText.length() == 0) {
-            mCustomLabel.setSummary(R.string.custom_carrier_label_notset);
-        } else {
-            mCustomLabel.setSummary(mCustomLabelText);
-        }
-    }
-
     private CheckBoxPreference findAndInitCheckboxPref(String key) {
         CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
         if (pref == null) {

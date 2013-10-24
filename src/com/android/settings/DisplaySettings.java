@@ -152,11 +152,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                 (wakeUpWhenPluggedOrUnpluggedConfig ? 1 : 0)) == 1);
 
         mSmartCoverWake = (CheckBoxPreference) findPreference(PREF_SMART_COVER_WAKE);
-        mSmartCoverWake.setOnPreferenceChangeListener(this);
         if(!getResources().getBoolean(com.android.internal.R.bool.config_lidControlsSleep)) {
             PreferenceCategory smartCoverOptions = (PreferenceCategory)
                     getPreferenceScreen().findPreference(PREF_SMART_COVER_CATEGORY);
             getPreferenceScreen().removePreference(smartCoverOptions);
+        } else {
+            mSmartCoverWake.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.LOCKSCREEN_LID_WAKE, 1) == 1);
+            mSmartCoverWake.setOnPreferenceChangeListener(this);
         }
 
         mCustomLabel = findPreference(PREF_CUSTOM_CARRIER_LABEL);

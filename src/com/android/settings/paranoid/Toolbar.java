@@ -310,6 +310,7 @@ public class Toolbar extends SettingsPreferenceFragment
     public void onResume() {
         super.onResume();
         updateRamBar();
+    
     }
 
     @Override

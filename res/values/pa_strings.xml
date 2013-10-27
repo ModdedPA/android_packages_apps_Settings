@@ -208,6 +208,11 @@
     <string name="halo_speech_bubble_color">Speech Bubble Color</string>
     <string name="halo_text_color">Text Color</string>
 
+    <string name="halo_multi_window_mode_title">Multi Window Mode</string>
+    <string name="halo_multi_window_mode_floating">Open Windows always in floating mode</string>
+    <string name="halo_multi_window_mode_splitview">Open Windows always in SplitView mode</string>
+    <string name="halo_multi_window_mode_both">Open Windows in floating mode when top window is fullscreen and in SplitView mode when top window is NOT fullscreen</string>
+
     <!-- Label for are-halo-notifications-allowed checkbox in app details [CHAR LIMIT=20] -->
     <string name="app_halo_label_black">Blacklist from HALO</string>
     <string name="app_halo_label_white">Whitelist from HALO</string>

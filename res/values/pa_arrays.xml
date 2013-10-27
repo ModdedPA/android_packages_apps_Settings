@@ -461,6 +461,18 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+    
+    <string-array name="halo_multi_window_mode_entries">
+        <item>@string/halo_multi_window_mode_floating</item>
+        <item>@string/halo_multi_window_mode_splitview</item>
+        <item>@string/halo_multi_window_mode_both</item>
+    </string-array>
+
+    <string-array name="halo_multi_window_mode_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 
     <!-- NFC settings. -->
     <string-array name="nfc_polling_mode_entries">

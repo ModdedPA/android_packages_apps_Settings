@@ -54,11 +54,13 @@ public class Halo extends SettingsPreferenceFragment
     private static final String KEY_HALO_NOTIF_DESC_COLOR = "halo_notif_desc_color";
     private static final String KEY_HALO_SPEECH_BUBBLE_COLOR = "halo_speech_bubble_color";
     private static final String KEY_HALO_TEXT_COLOR = "halo_text_color";
+    private static final String KEY_HALO_MULTI_WINDOW_MODE = "halo_multi_window_mode";
 
     private ListPreference mHaloState;
     private ListPreference mHaloSize;
     private ListPreference mHaloNotifyCount;
     private ListPreference mHaloMsgAnimate;
+    private ListPreference mHaloMultiWindowMode;
 
     private CheckBoxPreference mHaloNinja;
     private CheckBoxPreference mHaloMsgBox;
@@ -204,6 +206,12 @@ public class Halo extends SettingsPreferenceFragment
     	mHaloTextColor.setSummary(hex);
     	mHaloTextColor.setNewPreviewColor(color);
     	mHaloTextColor.setEnabled(mHaloColors.isChecked());
+    	
+    	mHaloMultiWindowMode = (ListPreference)prefSet.findPreference(KEY_HALO_MULTI_WINDOW_MODE);
+    	mHaloMultiWindowMode.setOnPreferenceChangeListener(this);
+    	mHaloMultiWindowMode.setValue(Integer.toString(Settings.System.getInt(mContext.getContentResolver(), 
+    			Settings.System.HALO_MULTI_WINDOW_MODE, 0)));
+    	mHaloMultiWindowMode.setSummary(mHaloMultiWindowMode.getEntry());
     }
 
     private boolean isHaloPolicyBlack() {
@@ -314,6 +322,11 @@ public class Halo extends SettingsPreferenceFragment
         	preference.setSummary(hex);
         	Settings.System.putInt(getActivity().getContentResolver(),
         			Settings.System.HALO_TEXT_COLOR, ColorPickerPreference.convertToColorInt(hex));
+        } else if (preference == mHaloMultiWindowMode) {
+        	int val = Integer.parseInt((String)newValue);
+        	Settings.System.putInt(getActivity().getContentResolver(), 
+        			Settings.System.HALO_MULTI_WINDOW_MODE, val);
+        	mHaloMultiWindowMode.setSummary(mHaloMultiWindowMode.getEntry());
         }
         return false;
     }

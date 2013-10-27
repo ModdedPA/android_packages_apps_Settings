@@ -84,6 +84,14 @@
             android:summary="@string/halo_unlock_ping_summary"
             android:defaultValue="false" />
 
+        <ListPreference
+            android:key="halo_multi_window_mode"
+            android:persistent="false"
+            android:dialogTitle="@string/halo_multi_window_mode_title"
+            android:title="@string/halo_multi_window_mode_title"
+            android:entries="@array/halo_multi_window_mode_entries"
+            android:entryValues="@array/halo_multi_window_mode_values" />
+
         <CheckBoxPreference
             android:key="halo_colors"
             android:title="@string/halo_colors"

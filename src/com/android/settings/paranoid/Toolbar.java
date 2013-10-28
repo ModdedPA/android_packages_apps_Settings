@@ -364,6 +364,12 @@ public class Toolbar extends SettingsPreferenceFragment
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_TRAFFIC_SUMMARY, val);
             mStatusBarTraffic_summary.setSummary(mStatusBarTraffic_summary.getEntries()[index]);
             return true;
+        } else if (preference == mLowBatteryWarning) {
+        	int val = Integer.valueOf((String) newValue);
+        	int index = mLowBatteryWarning.findIndexOfValue((String) newValue);
+        	Settings.System.putInt(resolver, Settings.System.POWER_UI_LOW_BATTERY_WARNING_POLICY, val);
+            mLowBatteryWarning.setValue(String.valueOf(index));
+            mLowBatteryWarning.setSummary(mLowBatteryWarning.getEntry());
         }
         return false;
     }

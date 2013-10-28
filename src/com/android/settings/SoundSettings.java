@@ -102,7 +102,6 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mVibrateWhenRinging;
     private ListPreference mVolumeOverlay;
     private CheckBoxPreference mDtmfTone;
-    private ListPreference mAnnoyingNotifications;
     private ListPreference mNotifSoundLimiter;
     private CheckBoxPreference mSoundEffects;
     private CheckBoxPreference mHapticFeedback;
@@ -164,12 +163,6 @@ public class SoundSettings extends SettingsPreferenceFragment implements
             // device is not CDMA, do not display CDMA emergency_tone
             getPreferenceScreen().removePreference(findPreference(KEY_EMERGENCY_TONE));
         }
-
-        mAnnoyingNotifications = (ListPreference) findPreference(PREF_LESS_NOTIFICATION_SOUNDS);
-        mAnnoyingNotifications.setOnPreferenceChangeListener(this);
-        int notificationThreshold = Settings.System.getInt(resolver,
-                Settings.System.MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD, 0);
-        mAnnoyingNotifications.setValue(Integer.toString(notificationThreshold));
 
         mVolumeOverlay = (ListPreference) findPreference(KEY_VOLUME_OVERLAY);
         mVolumeOverlay.setOnPreferenceChangeListener(this);
@@ -412,10 +405,6 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         }else if (preference == mConvertSoundToVibration) {
             Settings.System.putInt(getContentResolver(), Settings.System.NOTIFICATION_CONVERT_SOUND_TO_VIBRATION,
                     mConvertSoundToVibration.isChecked() ? 1 : 0);
-        } else if (preference == mAnnoyingNotifications) {
-            final int val = Integer.valueOf((String) objValue);
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD, val);
         } else if (preference == mMusicFx) {
             // let the framework fire off the intent
             return false;

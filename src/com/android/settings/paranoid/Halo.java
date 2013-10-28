@@ -326,6 +326,7 @@ public class Halo extends SettingsPreferenceFragment
         	int val = Integer.parseInt((String)newValue);
         	Settings.System.putInt(getActivity().getContentResolver(), 
         			Settings.System.HALO_MULTI_WINDOW_MODE, val);
+            mHaloMultiWindowMode.setValue(Integer.toString(val));
         	mHaloMultiWindowMode.setSummary(mHaloMultiWindowMode.getEntry());
         }
         return false;

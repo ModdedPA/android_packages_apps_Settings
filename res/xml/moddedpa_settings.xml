@@ -15,6 +15,22 @@
             android:summary="@string/alt_resolver_summary"
             android:defaultValue="false" />     
 
+        <!-- Screen state service -->
+        <PreferenceScreen
+            android:id="@+id/screen_state_service"
+            android:fragment="com.android.settings.moddedpa.fragments.ScreenStateToggles"
+            android:icon="@drawable/ic_screen_state"
+            android:title="@string/screen_state_toggles_title"
+            android:summary="@string/screen_state_toggles_summary" />
+
+        <!-- Wakelock blocker -->
+        <PreferenceScreen
+            android:id="@+id/wakelock_blocker"
+            android:fragment="com.android.settings.moddedpa.fragments.WakeLockBlocker"
+            android:icon="@drawable/ic_wakelock_blocker"
+            android:title="@string/wakelock_blocker"
+            android:summary="@string/wakelock_blocker_header_summary" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

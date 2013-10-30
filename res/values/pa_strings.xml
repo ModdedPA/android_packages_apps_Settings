@@ -715,10 +715,6 @@
     <string name="hex">Hex:</string>
     <string name="color_default">Default</string> 
 
-    <!-- Less Notification sounds -->
-    <string name="less_notification_sounds_title">Less Frequent Notification Sounds</string>
-    <string name="less_notification_sounds_summary">Limit the notification sounds of each app to only play once per set time period</string>
-
     <!-- Recents Ram Bar -->
     <string name="ram_bar">Recents RAM bar</string>
     <string name="ram_bar_note_title">Note</string>
@@ -878,5 +874,4 @@ USB networks). This setting is reset on reboot</string>
 
     <string name="screen_security_category">Screen security</string>
     <string name="screen_security_summary">View or change lock screen security settings</string>
-
 </resources>

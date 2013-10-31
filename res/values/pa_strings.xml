@@ -106,6 +106,10 @@
     <string name="home_screen_widgets_summary">Allows widgets from the home screen to be added on lock screen</string>
     <string name="home_screen_widgets_warning_title">This may be dangerous!</string>
     <string name="home_screen_widgets_warning">Allowing home screen widgets to be added on lock screen, may lead to security issues, do you want to continue?</string>
+    <!-- Blur -->
+    <string name="blur_background_title">Blur Lockscreen Background</string>
+    <string name="blur_background_summary">Apply a blur filter on the lockscreen background, looks nice when see through is enabled</string>
+    <string name="blur_radius_title">Blur Radius</string>
     <!-- Shortcuts -->
     <string name="lock_screen_shortcuts_title">Shortcuts</string>
     <string name="lock_screen_shortcuts_summary">View or change custom lock screen shortcuts</string>

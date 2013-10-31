@@ -47,6 +47,8 @@ import com.android.settings.Utils;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.notificationlight.ColorPickerView;
 
+import com.android.settings.crdroid.SeekBarPreference;
+
 public class Lockscreen extends SettingsPreferenceFragment
         implements Preference.OnPreferenceChangeListener {
 
@@ -57,6 +59,8 @@ public class Lockscreen extends SettingsPreferenceFragment
     private static final String KEY_MAXIMIZE_WIDGETS = "maximize_widgets";
     private static final String KEY_BACKGROUND_PREF = "lockscreen_background";
     private static final String KEY_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS = "lockscreen_hide_initial_page_hints";
+    private static final String KEY_BLUR_BACKGROUND = "blur_background";
+    private static final String KEY_BLUR_RADIUS = "blur_radius";
 
     private static final int REQUEST_CODE_BG_WALLPAPER = 1024;
     private static final int LOCKSCREEN_BACKGROUND_COLOR_FILL = 0;
@@ -66,6 +70,8 @@ public class Lockscreen extends SettingsPreferenceFragment
     private ListPreference mCustomBackground;
     private CheckBoxPreference mAllowRotation;
     private CheckBoxPreference mSeeThrough;
+    private CheckBoxPreference mBlurBackground; 
+    private SeekBarPreference mBlurRadius;
     private CheckBoxPreference mHomeScreenWidgets;
     private CheckBoxPreference mMaximizeWidgets;
     private CheckBoxPreference mQuickUnlock;
@@ -103,7 +109,16 @@ public class Lockscreen extends SettingsPreferenceFragment
         mSeeThrough = (CheckBoxPreference) prefSet.findPreference(KEY_SEE_TRHOUGH);
         mSeeThrough.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1);
+        
+        mBlurBackground = (CheckBoxPreference) prefSet.findPreference(KEY_BLUR_BACKGROUND);
+        mBlurBackground.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.LOCKSCREEN_BLUR_BACKGROUND, 0) == 1);
                    
+        mBlurRadius = (SeekBarPreference) prefSet.findPreference(KEY_BLUR_RADIUS);
+        mBlurRadius.setValue(Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.LOCKSCREEN_BLUR_RADIUS, 12));
+        mBlurRadius.setOnPreferenceChangeListener(this);
+
         mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference(KEY_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);
         if (!Utils.isPhone(getActivity())) {
             getPreferenceScreen().removePreference(mLockscreenHideInitialPageHints);
@@ -162,6 +177,10 @@ public class Lockscreen extends SettingsPreferenceFragment
         } else if (preference == mSeeThrough) {
             Settings.System.putInt(mContext.getContentResolver(),
                     Settings.System.LOCKSCREEN_SEE_THROUGH, mSeeThrough.isChecked()
+                    ? 1 : 0);
+        } else if (preference == mBlurBackground) {
+            Settings.System.putInt(mContext.getContentResolver(),
+                    Settings.System.LOCKSCREEN_BLUR_BACKGROUND, mBlurBackground.isChecked()
                     ? 1 : 0);
         } else if (preference == mHomeScreenWidgets) {
             final boolean isChecked = mHomeScreenWidgets.isChecked();
@@ -232,7 +251,10 @@ public class Lockscreen extends SettingsPreferenceFragment
             boolean value = (Boolean) objValue;
             Settings.System.putInt(cr, Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, value ? 1 : 0);
             return true;
-	}
+	    } else if (preference == mBlurRadius) {
+            Settings.System.putInt(cr,
+                    Settings.System.LOCKSCREEN_BLUR_RADIUS, ((Integer)objValue).intValue());
+        }
         return false;
     }
 

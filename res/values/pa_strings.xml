@@ -15,4 +15,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!-- About phone screen,  setting option name-->
+    <string name="moddedpa_version">ModdedPA Version</string>
+    <string name="moddedpa_version_default">Unknown</string>
+
 </resources>

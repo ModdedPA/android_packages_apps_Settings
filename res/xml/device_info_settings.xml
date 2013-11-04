@@ -131,6 +131,12 @@
                 android:title="@string/build_number"
                 android:summary="@string/device_info_default"/>
 
+        <!-- ModdedPA Version -->
+        <Preference android:key="moddedpa_version"
+                style="?android:preferenceInformationStyle"
+                android:title="@string/moddedpa_version"
+                android:summary="@string/moddedpa_version_default" />
+
         <!-- SELinux status information -->
         <Preference android:key="selinux_status"
                 style="?android:preferenceInformationStyle"

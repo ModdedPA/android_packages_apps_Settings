@@ -6,6 +6,14 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
     <PreferenceCategory
+        android:title="@string/moddedpa_settings_general_title">
+
+        <PreferenceScreen
+            android:key="lights_and_warnings"
+            android:fragment="com.android.settings.moddedpa.LightsAndWarnings"
+            android:title="@string/lights_and_warnings_title" />
+
+    <PreferenceCategory
         android:title="@string/moddedpa_settings_systemui_title">
 
         <PreferenceScreen

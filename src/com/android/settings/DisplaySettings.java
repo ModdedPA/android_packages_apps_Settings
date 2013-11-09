@@ -62,6 +62,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_SCREEN_SAVER = "screensaver";
     private static final String KEY_WIFI_DISPLAY = "wifi_display";
     private static final String KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
+    private static final String KEY_ANIMATION_OPTIONS = "category_animation_options";
+    private static final String KEY_POWER_CRT_MODE = "system_power_crt_mode";
 
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
 
@@ -71,6 +73,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mWakeWhenPluggedOrUnplugged;
     private WarnedListPreference mFontSizePref;
     private CheckBoxPreference mNotificationPulse;
+    private ListPreference mCrtMode;
 
     private final Configuration mCurConfig = new Configuration();
     
@@ -157,6 +160,23 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                 == WifiDisplayStatus.FEATURE_STATE_UNAVAILABLE) {
             getPreferenceScreen().removePreference(mWifiDisplayPreference);
             mWifiDisplayPreference = null;
+        }
+
+        // respect device default configuration
+        // true fades while false animates
+        boolean electronBeamFadesConfig = getResources().getBoolean(
+                com.android.internal.R.bool.config_animateScreenLights);
+        PreferenceCategory animationOptions =
+            (PreferenceCategory) prefSet.findPreference(KEY_ANIMATION_OPTIONS);
+        mCrtMode = (ListPreference) prefSet.findPreference(KEY_POWER_CRT_MODE);
+        if (!electronBeamFadesConfig && mCrtMode != null) {
+            int crtMode = Settings.System.getInt(getContentResolver(),
+                    Settings.System.SYSTEM_POWER_CRT_MODE, 1);
+            mCrtMode.setValue(String.valueOf(crtMode));
+            mCrtMode.setSummary(mCrtMode.getEntry());
+            mCrtMode.setOnPreferenceChangeListener(this);
+        } else if (animationOptions != null) {
+            prefSet.removePreference(animationOptions);
         }
     }
 
@@ -379,7 +399,23 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (KEY_FONT_SIZE.equals(key)) {
             writeFontSizePreference(objValue);
         }
+<<<<<<< HEAD
 
+=======
+        if (KEY_VOLUME_WAKE.equals(key)) {
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.VOLUME_WAKE_SCREEN,
+                    (Boolean) objValue ? 1 : 0);
+        }
+        if (KEY_POWER_CRT_MODE.equals(key)) {
+            int value = Integer.parseInt((String) objValue);
+            int index = mCrtMode.findIndexOfValue((String) objValue);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.SYSTEM_POWER_CRT_MODE,
+                    value);
+            mCrtMode.setSummary(mCrtMode.getEntries()[index]);
+        }
+>>>>>>> 655c284... Settings: Slims ElectronBeam get some love (2/2)
         return true;
     }
 

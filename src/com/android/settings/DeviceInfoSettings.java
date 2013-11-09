@@ -96,7 +96,7 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
         findPreference(KEY_BUILD_NUMBER).setEnabled(true);
         findPreference(KEY_KERNEL_VERSION).setSummary(getFormattedKernelVersion());
         setValueSummary(KEY_MODDEDPA_VERSION, "ro.moddedpa.version");
-        setValueSummary(KEY_PA_VERSION, "ro.pa.version");t
+        setValueSummary(KEY_PA_VERSION, "ro.pa.version");
 
         if (!SELinux.isSELinuxEnabled()) {
             String status = getResources().getString(R.string.selinux_status_disabled);

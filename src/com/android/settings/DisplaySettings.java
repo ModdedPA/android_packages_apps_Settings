@@ -399,14 +399,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (KEY_FONT_SIZE.equals(key)) {
             writeFontSizePreference(objValue);
         }
-<<<<<<< HEAD
-
-=======
-        if (KEY_VOLUME_WAKE.equals(key)) {
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.VOLUME_WAKE_SCREEN,
-                    (Boolean) objValue ? 1 : 0);
-        }
         if (KEY_POWER_CRT_MODE.equals(key)) {
             int value = Integer.parseInt((String) objValue);
             int index = mCrtMode.findIndexOfValue((String) objValue);
@@ -415,7 +407,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                     value);
             mCrtMode.setSummary(mCrtMode.getEntries()[index]);
         }
->>>>>>> 655c284... Settings: Slims ElectronBeam get some love (2/2)
         return true;
     }
 

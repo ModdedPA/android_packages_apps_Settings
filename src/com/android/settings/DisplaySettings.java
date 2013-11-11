@@ -37,6 +37,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
@@ -167,8 +168,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         boolean electronBeamFadesConfig = getResources().getBoolean(
                 com.android.internal.R.bool.config_animateScreenLights);
         PreferenceCategory animationOptions =
-            (PreferenceCategory) prefSet.findPreference(KEY_ANIMATION_OPTIONS);
-        mCrtMode = (ListPreference) prefSet.findPreference(KEY_POWER_CRT_MODE);
+            (PreferenceCategory) findPreference(KEY_ANIMATION_OPTIONS);
+        mCrtMode = (ListPreference) findPreference(KEY_POWER_CRT_MODE);
         if (!electronBeamFadesConfig && mCrtMode != null) {
             int crtMode = Settings.System.getInt(getContentResolver(),
                     Settings.System.SYSTEM_POWER_CRT_MODE, 1);
@@ -176,7 +177,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             mCrtMode.setSummary(mCrtMode.getEntry());
             mCrtMode.setOnPreferenceChangeListener(this);
         } else if (animationOptions != null) {
-            prefSet.removePreference(animationOptions);
+            getPreferenceScreen().removePreference(animationOptions);
         }
     }
 

@@ -33,6 +33,7 @@ import android.provider.Settings.SettingNotFoundException;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.util.Helpers;
 
 import java.util.ArrayList;
 
@@ -40,10 +41,12 @@ public class ModdedPASettings extends SettingsPreferenceFragment
         implements Preference.OnPreferenceChangeListener {
 
     private static final String KEY_LOW_BATTERY_WARNING_POLICY = "pref_low_battery_warning_policy";  
+    private static final String RESTART_SYSTEMUI = "restart_systemui";
 
     private Context mContext;
 
     private ListPreference mLowBatteryWarning; 
+    private Preference mRestartSystemUI;
 
     private final ArrayList<Preference> mAllPrefs = new ArrayList<Preference>();
     private final ArrayList<CheckBoxPreference> mResetCbPrefs
@@ -66,6 +69,9 @@ public class ModdedPASettings extends SettingsPreferenceFragment
         mLowBatteryWarning.setSummary(mLowBatteryWarning.getEntry());
         mLowBatteryWarning.setOnPreferenceChangeListener(this);
 
+        // Restart SystemUI
+        mRestartSystemUI = findPreference(RESTART_SYSTEMUI)
+
     }
 
     @Override
@@ -84,5 +90,12 @@ public class ModdedPASettings extends SettingsPreferenceFragment
             return true;
         }  
         return false;
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mRestartSystemUI) {
+            Helpers.restartSystemUI();
+        }
     }
 }

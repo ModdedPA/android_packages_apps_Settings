@@ -17,10 +17,15 @@
               android:entryValues="@array/pref_low_battery_warning_policy_values"
               android:defaultValue="0" />  
 
+
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/moddedpa_settings_systemui_title">
+
+        <!-- Restart SystemUI -->
+        <Preference android:key="restart_systemui"
+            android:title="@string/restart_systemui" />
 
         <PreferenceScreen
             android:fragment="com.android.settings.moddedpa.NotificationDrawerStyle"

@@ -6,7 +6,7 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
     <PreferenceCategory
-        android:title="@string/general_settings_style_title">
+        android:title="@string/moddedpa_settings_general_title">
 
         <!-- Alternate App picker -->
         <CheckBoxPreference
@@ -18,7 +18,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/general_settings_systemui_title">
+        android:title="@string/moddedpa_settings_systemui_title">
 
         <PreferenceScreen
             android:key="notification_drawer"

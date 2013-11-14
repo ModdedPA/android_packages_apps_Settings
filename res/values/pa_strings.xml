@@ -149,4 +149,10 @@ USB networks). This setting is reset on reboot</string>
 
     <!-- Lockscreen battery ring -->
     <string name="battery_around_lockscreen_ring">Battery around unlock ring</string>
+
+    <!-- ModdedPA Settings -->
+    <string name="moddedpa_settings_title">ModdedPA Settings</string>
+
+    <!-- Interface -->
+    <string name="header_category_interface">Interface</string>
 </resources>

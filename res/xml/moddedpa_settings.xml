@@ -5,4 +5,16 @@
     android:title="@string/moddedpa_settings_title"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
+    <PreferenceCategory
+        android:title="@string/general_settings_style_title">
+
+        <!-- Alternate App picker -->
+        <CheckBoxPreference
+            android:key="use_alt_resolver"
+            android:title="@string/alt_resolver"
+            android:summary="@string/alt_resolver_summary"
+            android:defaultValue="false" />     
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

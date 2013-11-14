@@ -152,7 +152,12 @@ USB networks). This setting is reset on reboot</string>
 
     <!-- ModdedPA Settings -->
     <string name="moddedpa_settings_title">ModdedPA Settings</string>
+    <string name="general_settings_title">General Settings</string>
 
     <!-- Interface -->
     <string name="header_category_interface">Interface</string>
+
+    <!-- Alternate default app picker -->
+    <string name="alt_resolver">Use Alt Default App Grid</string>
+    <string name="alt_resolver_summary">Use Alternate Default App Picker</string>   
 </resources>

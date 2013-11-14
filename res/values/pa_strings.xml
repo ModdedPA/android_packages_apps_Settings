@@ -50,8 +50,6 @@
     <string name="dialog_delete_message">Remove selected item?</string>
     <string name="dialog_test_message">Turn the screen off to see the selected notification in action or dismiss this dialog to stop the test</string>
     <string name="dialog_test_button">Dismiss</string>
-    <string name="ok">OK</string>
-    <string name="reset">Reset</string>
     <string name="profile_choose_app">Choose app</string>
     <string name="profiles_add">Add</string>
 
@@ -90,7 +88,10 @@
     <string name="battery_light_medium_color_title">Charging</string>
     <string name="battery_light_full_color_title">Fully charged</string>
 
-     <!--PA version-->
+     <!--Additional keyboard settings-->
+     <string name="settings_additional_category">Additional settings</string>
+
+     <!--PA Version-->
      <string name="pa_version">ParanoidAndroid version</string>
      <string name="pa_version_default">Unknown</string>
 
@@ -379,4 +380,11 @@ USB networks). This setting is reset on reboot</string>
     <string name="battery_bolt_color">Bolt charging color</string>
     <string name="battery_text_charging_color">Percentage text charging color</string>
     <string name="battery_style_reset_message">Reset all battery colors?</string>
+
+    <!-- Volume Key Cursor Control -->
+    <string name="volume_key_cursor_control_title">Volume Key Cursor Control</string>
+    <string name="volume_key_cursor_control_off">Off</string>
+    <string name="volume_key_cursor_control_on">Volume up moves cursor left</string>
+    <string name="volume_key_cursor_control_on_reverse">Volume up moves cursor right</string>
+
 </resources>

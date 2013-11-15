@@ -73,7 +73,6 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
     private static final String KEY_PA_VERSION = "pa_version";
     private static final String KEY_DEVICE_CPU = "device_cpu";
     private static final String KEY_DEVICE_MEMORY = "device_memory";
-    private static final String KEY_PARANOIDOTA = "paranoidota_settings";
 
     static final int TAPS_TO_BE_A_DEVELOPER = 7;
 
@@ -145,12 +144,6 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
         // Remove Baseband version if wifi-only device
         if (Utils.isWifiOnly(getActivity())) {
             getPreferenceScreen().removePreference(findPreference(KEY_BASEBAND_VERSION));
-        }
-
-        if (UserHandle.myUserId() == UserHandle.USER_OWNER) {
-            removePreferenceIfPackageNotInstalled(findPreference(KEY_PARANOIDOTA));
-        } else {
-            getPreferenceScreen().removePreference(findPreference(KEY_PARANOIDOTA));
         }
 
         /*
@@ -404,8 +397,8 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
 
         try {
             /* The expected /proc/cpuinfo output is as follows:
-             * Processor	: ARMv7 Processor rev 2 (v7l)
-             * BogoMIPS	: 272.62
+             * Processor        : ARMv7 Processor rev 2 (v7l)
+             * BogoMIPS        : 272.62
              */
             String firstLine = readLine(FILENAME_PROC_CPUINFO);
             if (firstLine != null) {
@@ -414,22 +407,5 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
         } catch (IOException e) {}
 
         return result;
-
-    private boolean removePreferenceIfPackageNotInstalled(Preference preference) {
-        String intentUri = ((PreferenceScreen) preference).getIntent().toUri(1);
-        Pattern pattern = Pattern.compile("component=([^/]+)/");
-        Matcher matcher = pattern.matcher(intentUri);
-
-        String packageName = matcher.find() ? matcher.group(1) : null;
-        if(packageName != null) {
-            try {
-                getPackageManager().getPackageInfo(packageName, 0);
-            } catch (NameNotFoundException e) {
-                Log.e(LOG_TAG,"package "+packageName+" not installed, hiding preference.");
-                getPreferenceScreen().removePreference(preference);
-                return true;
-            }
-        }
-        return false;
     }
 }

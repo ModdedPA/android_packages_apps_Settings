@@ -110,7 +110,6 @@
         android:summary="@string/volume_music_controls_summary"
         android:persistent="false" />
 
-
     <!-- Dock -->
     <PreferenceCategory
         android:key="dock_category"

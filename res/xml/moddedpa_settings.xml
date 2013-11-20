@@ -25,6 +25,12 @@
             android:fragment="com.android.settings.moddedpa.NotificationDrawer"
             android:title="@string/notification_drawer_title" />
 
+  <!-- Recents RAM bar -->
+    <PreferenceScreen
+            android:key="recents_ram_bar"
+            android:fragment="com.android.settings.moddedpa.RamBar"
+            android:title="@string/ram_bar" /> 
+
     </PreferenceCategory>
 
 </PreferenceScreen>

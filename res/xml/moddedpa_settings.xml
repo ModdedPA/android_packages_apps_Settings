@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/moddedpa_settings_title"
+    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
+
+    <PreferenceCategory
+        android:title="@string/moddedpa_settings_general_title">
+
+        <!-- Alternate App picker -->
+        <CheckBoxPreference
+            android:key="use_alt_resolver"
+            android:title="@string/alt_resolver"
+            android:summary="@string/alt_resolver_summary"
+            android:defaultValue="false" />     
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/moddedpa_settings_systemui_title">
+
+        <PreferenceScreen
+            android:fragment="com.android.settings.moddedpa.NotificationDrawerStyle"
+            android:key="notification_drawer_style_pref"
+            android:title="@string/notification_drawer_background" />
+
+        <!-- Recents RAM bar -->
+        <PreferenceScreen
+            android:key="recents_ram_bar"
+            android:fragment="com.android.settings.moddedpa.RamBar"
+            android:title="@string/ram_bar" /> 
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -243,27 +243,26 @@ public class NavRing extends Fragment implements
             Settings.System.putString(cr,
                     Settings.System.NAVIGATION_RING_TARGETS[i], mTargetActivities[i]);
         }
-        setDrawables();
+        updateDrawables();
     }
 
     @Override
     public void shortcutPicked(String uri, String friendlyName, boolean isApplication) {
         mTargetActivities[mTargetIndex] = uri;
-        saveAll();
+        setDrawables();
     }
 
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         mPicker.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void updateDrawables() {
+    public void updateDrawables() {
         mTargetActivities = NavigationRingHelpers.getTargetActions(getActivity());
         setDrawables();
     }
 
-    private void onTargetChange(String uri) {
+    public void onTargetChange(String uri) {
         if (uri.equals(ACTION_APP)) {
             final String label = getResources().getString(R.string.lockscreen_target_empty);
             final ShortcutIconResource iconResource =
@@ -274,7 +273,7 @@ public class NavRing extends Fragment implements
                     getId());
         } else {
             mTargetActivities[mTargetIndex] = uri;
-            saveAll();
+            setDrawables();
         }
     }
 

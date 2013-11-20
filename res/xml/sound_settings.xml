@@ -45,6 +45,13 @@
             android:persistent="false"
             android:ringtoneType="ringtone" />
 
+    <com.android.settings.slim.IncreasingRingPreference
+            android:key="increasing_ring"
+            android:title="@string/increasing_ring_title"
+            android:dialogTitle="@string/increasing_ring_title"
+            android:persistent="false"
+            android:streamType="ring" />
+
     <CheckBoxPreference
          android:key="vibrate_when_ringing"
          android:title="@string/vibrate_when_ringing_title"
@@ -96,20 +103,13 @@
 
     <!-- Volume Rocker -->
     <PreferenceCategory
-        android:title="@string/volume_rocker_category"/>
+        android:title="@string/volume_buttons_category"/>
 
     <CheckBoxPreference
         android:key="volume_wake_screen"
-        android:title="@string/volume_wake_screen_title"
-        android:summary="@string/volume_wake_screen_summary"
+        android:title="@string/volume_wake_title"
+        android:summary="@string/volume_wake_summary"
         android:defaultValue="false" />
-
-    <CheckBoxPreference
-        android:key="volume_music_controls"
-        android:title="@string/volume_music_controls_title"
-        android:summary="@string/volume_music_controls_summary"
-        android:persistent="false" />
-
 
     <!-- Dock -->
     <PreferenceCategory

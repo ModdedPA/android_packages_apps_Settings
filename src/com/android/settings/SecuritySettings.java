@@ -38,6 +38,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
+import android.preference.SeekBarPreference;
 import android.provider.Settings;
 import android.security.KeyStore;
 import android.telephony.TelephonyManager;
@@ -68,6 +69,8 @@ public class SecuritySettings extends RestrictedSettingsFragment
     private static final String KEY_OWNER_INFO_SETTINGS = "owner_info_settings";
     private static final String KEY_ENABLE_WIDGETS = "keyguard_enable_widgets";
     private static final String KEY_SEE_TRHOUGH = "see_through";
+    private static final String KEY_BLUR_BEHIND = "blur_behind";
+    private static final String KEY_BLUR_RADIUS = "blur_radius";
 
     private static final int SET_OR_CHANGE_LOCK_METHOD_REQUEST = 123;
     private static final int CONFIRM_EXISTING_FOR_BIOMETRIC_WEAK_IMPROVE_REQUEST = 124;
@@ -110,6 +113,9 @@ public class SecuritySettings extends RestrictedSettingsFragment
     private CheckBoxPreference mPowerButtonInstantlyLocks;
     private CheckBoxPreference mEnableKeyguardWidgets;
     private CheckBoxPreference mSeeThrough;
+    private CheckBoxPreference mBlurBehind;
+    
+    private SeekBarPreference mBlurRadius;
 
     private Preference mNotificationAccess;
 
@@ -221,6 +227,13 @@ public class SecuritySettings extends RestrictedSettingsFragment
 
         // lockscreen see through
         mSeeThrough = (CheckBoxPreference) root.findPreference(KEY_SEE_TRHOUGH);
+        mBlurBehind = (CheckBoxPreference) root.findPreference(KEY_BLUR_BEHIND);
+        mBlurBehind.setChecked(Settings.System.getInt(getContentResolver(), 
+        		Settings.System.LOCKSCREEN_BLUR_BEHIND, 0) == 1);
+        mBlurRadius = (SeekBarPreference) root.findPreference(KEY_BLUR_RADIUS);
+        mBlurRadius.setProgress(Settings.System.getInt(getContentResolver(), 
+        		Settings.System.LOCKSCREEN_BLUR_RADIUS, 12));
+        mBlurRadius.setOnPreferenceChangeListener(this);
 
         // biometric weak liveliness
         mBiometricWeakLiveliness =
@@ -593,6 +606,9 @@ public class SecuritySettings extends RestrictedSettingsFragment
         } else if (preference == mSeeThrough) {
             Settings.System.putInt(getContentResolver(), Settings.System.LOCKSCREEN_SEE_THROUGH,
                     mSeeThrough.isChecked() ? 1 : 0);
+        } else if (preference == mBlurBehind) {
+            Settings.System.putInt(getContentResolver(), Settings.System.LOCKSCREEN_BLUR_BEHIND,
+                    mBlurBehind.isChecked() ? 1 : 0);
         } else if (KEY_TOGGLE_VERIFY_APPLICATIONS.equals(key)) {
             Settings.Global.putInt(getContentResolver(), Settings.Global.PACKAGE_VERIFIER_ENABLE,
                     mToggleVerifyApps.isChecked() ? 1 : 0);
@@ -641,6 +657,8 @@ public class SecuritySettings extends RestrictedSettingsFragment
                 Log.e("SecuritySettings", "could not persist lockAfter timeout setting", e);
             }
             updateLockAfterPreferenceSummary();
+        } else if (preference == mBlurRadius) {
+        	Settings.System.putInt(getContentResolver(), Settings.System.LOCKSCREEN_BLUR_RADIUS, (Integer)value);
         }
         return true;
     }

@@ -1576,6 +1576,21 @@
             android:theme="@style/CryptKeeperBlankTheme"
         />
 
+        <activity
+            android:name=".moddedpa.ScreenStateToggles"
+            android:label="@string/screen_state_toggles_title" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".moddedpa.WakeLockBlocker"
+            android:label="@string/wakelock_blocker" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
         <!-- CyanogenMod activities End -->
 
 	<activity android:name=".moddedpa.RamBar" />  

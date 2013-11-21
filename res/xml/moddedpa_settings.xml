@@ -31,6 +31,11 @@
             android:fragment="com.android.settings.moddedpa.RamBar"
             android:title="@string/ram_bar" /> 
 
+        <!--Navring-->
+        <PreferenceScreen
+            android:key="navigation_ring"
+            android:fragment="com.android.settings.cyanogenmod.NavRing"
+            android:title="@string/navigation_ring_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

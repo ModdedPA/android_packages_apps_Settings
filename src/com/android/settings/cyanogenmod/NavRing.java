@@ -100,7 +100,7 @@ public class NavRing extends Fragment implements
         setHasOptionsMenu(true);
         createActionList();
 
-        mIsScreenLarge = false;//!Utils.isPhone(getActivity()); TODO: Fix Utils.isPhone!
+        mIsScreenLarge = !Utils.isPhone(getActivity());
         mIsLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
         mPicker = new ShortcutPickHelper(getActivity(), this);

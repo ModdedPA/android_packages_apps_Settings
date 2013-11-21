@@ -165,10 +165,6 @@ USB networks). This setting is reset on reboot</string>
     <!-- Interface -->
     <string name="header_category_interface">Interface</string>
 
-    <!-- Alternate default app picker -->
-    <string name="alt_resolver">Use Alt Default App Grid</string>
-    <string name="alt_resolver_summary">Use Alternate Default App Picker</string>   
-
     <!-- Notification Drawer Settings -->
     <string name="notification_style_summary">Change your notification drawer style</string>
     <string name="notification_drawer_background">Notification Drawer Background and transparency</string> 

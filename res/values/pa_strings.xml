@@ -120,6 +120,7 @@
      <string name="ok">OK</string>
      <string name="reset">Reset</string>
      <string name="attention">Attention</string>
+     <string name="default_string">Default</string>
 
    <!-- Android debugging over WiFi -->
     <string name="adb_over_network">ADB over network</string>

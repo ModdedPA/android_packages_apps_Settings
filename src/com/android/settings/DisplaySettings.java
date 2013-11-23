@@ -59,7 +59,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_SCREEN_TIMEOUT = "screen_timeout";
     private static final String KEY_ACCELEROMETER = "accelerometer";
     private static final String KEY_FONT_SIZE = "font_size";
-    private static final String KEY_NOTIFICATION_LED = "notification_led";
+    private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_SCREEN_SAVER = "screensaver";
     private static final String KEY_WIFI_DISPLAY = "wifi_display";
     private static final String KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
@@ -77,8 +77,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private ListPreference mCrtMode;
 
     private final Configuration mCurConfig = new Configuration();
-
-    private PreferenceScreen mNotificationLed;
     
     private ListPreference mScreenTimeoutPreference;
     private Preference mScreenSaverPreference;
@@ -140,12 +138,19 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         mFontSizePref = (WarnedListPreference) findPreference(KEY_FONT_SIZE);
         mFontSizePref.setOnPreferenceChangeListener(this);
         mFontSizePref.setOnPreferenceClickListener(this);
-
-        boolean hasNotificationLed = getResources().getBoolean(
-                com.android.internal.R.bool.config_intrusiveNotificationLed);
-        mNotificationLed = (PreferenceScreen) findPreference(KEY_NOTIFICATION_LED);
-        if (!hasNotificationLed) {
-            getPreferenceScreen().removePreference(mNotificationLed);
+        mNotificationPulse = (CheckBoxPreference) findPreference(KEY_NOTIFICATION_PULSE);
+        if (mNotificationPulse != null
+                && getResources().getBoolean(
+                        com.android.internal.R.bool.config_intrusiveNotificationLed) == false) {
+            getPreferenceScreen().removePreference(mNotificationPulse);
+        } else {
+            try {
+                mNotificationPulse.setChecked(Settings.System.getInt(resolver,
+                        Settings.System.NOTIFICATION_LIGHT_PULSE) == 1);
+                mNotificationPulse.setOnPreferenceChangeListener(this);
+            } catch (SettingNotFoundException snfe) {
+                Log.e(TAG, Settings.System.NOTIFICATION_LIGHT_PULSE + " not found");
+            }
         }
 
         mDisplayManager = (DisplayManager)getActivity().getSystemService(

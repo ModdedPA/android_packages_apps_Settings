@@ -67,8 +67,6 @@ public class RamBar extends SettingsPreferenceFragment implements OnPreferenceCh
     private ColorPickerPreference mRamBarCacheMemColor;
     private ColorPickerPreference mRamBarTotalMemColor;
 
-    private Context mContext;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,7 +133,7 @@ public class RamBar extends SettingsPreferenceFragment implements OnPreferenceCh
             case MENU_HELP: 
                 final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(EXPLANATION_URL));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
+                getActivity().startActivity(intent);
                 return true;
             default: 
                 return super.onContextItemSelected(item);

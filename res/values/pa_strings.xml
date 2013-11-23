@@ -168,6 +168,9 @@ USB networks). This setting is reset on reboot</string>
     <!-- Interface -->
     <string name="header_category_interface">Interface</string>
 
+    <!--Additional keyboard settings-->
+    <string name="settings_additional_category">Additional settings</string>
+
     <!-- Notification Drawer Settings -->
     <string name="notification_style_summary">Change your notification drawer style</string>
     <string name="notification_drawer_background">Notification Drawer Background and transparency</string> 

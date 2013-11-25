@@ -97,5 +97,6 @@ public class ModdedPASettings extends SettingsPreferenceFragment
         if (preference == mRestartSystemUI) {
             Helpers.restartSystemUI();
         }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 }

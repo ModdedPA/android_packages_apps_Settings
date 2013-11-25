@@ -70,7 +70,7 @@ public class ModdedPASettings extends SettingsPreferenceFragment
         mLowBatteryWarning.setOnPreferenceChangeListener(this);
 
         // Restart SystemUI
-        mRestartSystemUI = findPreference(RESTART_SYSTEMUI)
+        mRestartSystemUI = findPreference(RESTART_SYSTEMUI);
 
     }
 
